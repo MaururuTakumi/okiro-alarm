@@ -47,7 +47,22 @@
       "3": "困难"
     },
     "stepsCount": "所需步数",
-    "shakeCount": "所需摇晃次数"
+    "shakeCount": "所需摇晃次数",
+    "soundDefault": "默认",
+    "volume": "音量",
+    "soundTypes": {
+      "default": "默认",
+      "gentle": "轻柔唤醒",
+      "energetic": "活力满满",
+      "nature": "自然之声",
+      "bell": "铃声",
+      "digital": "数字",
+      "melody": "旋律",
+      "vibrate": "仅振动"
+    },
+    "volumeEscalation": "逐渐增大音量",
+    "volumeEscalationDesc": "闹钟音量将逐渐增大",
+    "soundPreview": "点击预览"
   },
   "mission": {
     "title": "完成任务以关闭闹钟",

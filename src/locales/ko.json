@@ -47,7 +47,22 @@
       "3": "어려움"
     },
     "stepsCount": "필요 걸음 수",
-    "shakeCount": "필요 흔들기 횟수"
+    "shakeCount": "필요 흔들기 횟수",
+    "soundDefault": "기본",
+    "volume": "볼륨",
+    "soundTypes": {
+      "default": "기본",
+      "gentle": "부드러운 기상",
+      "energetic": "에너지틱",
+      "nature": "자연의 소리",
+      "bell": "벨",
+      "digital": "디지털",
+      "melody": "멜로디",
+      "vibrate": "진동만"
+    },
+    "volumeEscalation": "점진적 볼륨 증가",
+    "volumeEscalationDesc": "알람 볼륨이 점점 커집니다",
+    "soundPreview": "탭하여 미리 듣기"
   },
   "mission": {
     "title": "미션을 완료하여 알람을 끄세요",

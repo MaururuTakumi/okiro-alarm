@@ -2,6 +2,8 @@ export type MissionType = 'none' | 'math' | 'barcode' | 'photo' | 'steps' | 'sha
 
 export type DayOfWeek = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
 
+export type AlarmSound = 'default' | 'gentle' | 'energetic' | 'nature' | 'bell' | 'digital' | 'melody' | 'vibrate';
+
 export interface Alarm {
   id: string;
   hour: number;
@@ -11,7 +13,8 @@ export interface Alarm {
   days: DayOfWeek[];
   missionType: MissionType;
   missionConfig: MissionConfig;
-  sound: string;
+  sound: AlarmSound;
+  volumeEscalation?: boolean;
 }
 
 export interface MissionConfig {

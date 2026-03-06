@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Switch,
   StyleSheet,
   Alert,
 } from 'react-native';
@@ -15,9 +16,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAlarms } from '../contexts/AlarmContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { useFreemium } from '../contexts/FreemiumContext';
-import { RootStackParamList, Alarm, DayOfWeek, MissionType, MissionConfig } from '../utils/types';
+import { RootStackParamList, Alarm, AlarmSound, DayOfWeek, MissionType, MissionConfig } from '../utils/types';
 import { scheduleAlarmNotification } from '../utils/notifications';
 import WheelPicker from '../components/WheelPicker';
+import SoundPicker from '../components/SoundPicker';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 type Route = RouteProp<RootStackParamList, 'AlarmSet'>;
@@ -54,6 +56,9 @@ export default function AlarmSetScreen() {
   const [mathDifficulty, setMathDifficulty] = useState<1 | 2 | 3>(existing?.missionConfig?.mathDifficulty ?? 1);
   const [stepsTarget, setStepsTarget] = useState(existing?.missionConfig?.stepsTarget ?? 30);
   const [shakeTarget, setShakeTarget] = useState(existing?.missionConfig?.shakeTarget ?? 30);
+  const [sound, setSound] = useState<AlarmSound>((existing?.sound as AlarmSound) ?? 'default');
+  const [volumeEscalation, setVolumeEscalation] = useState(existing?.volumeEscalation ?? false);
+  const [soundExpanded, setSoundExpanded] = useState(false);
 
   const hourItems = useMemo(
     () =>
@@ -92,7 +97,8 @@ export default function AlarmSetScreen() {
       days,
       missionType,
       missionConfig,
-      sound: 'default',
+      sound,
+      volumeEscalation,
     };
 
     if (editingId) {
@@ -191,6 +197,50 @@ export default function AlarmSetScreen() {
               </TouchableOpacity>
             );
           })}
+        </View>
+      </View>
+
+      {/* Sound Section */}
+      <View style={[styles.card, { backgroundColor: c.surface }]}>
+        <TouchableOpacity
+          style={styles.soundHeader}
+          onPress={() => setSoundExpanded(!soundExpanded)}
+          activeOpacity={0.7}
+        >
+          <Text style={[styles.cardTitle, { color: c.textSecondary, marginBottom: 0 }]}>
+            {t('alarmSet.sound')}
+          </Text>
+          <View style={styles.soundHeaderRight}>
+            <Text style={[styles.soundCurrentLabel, { color: c.text }]}>
+              {t(`alarmSet.soundTypes.${sound}`)}
+            </Text>
+            <Text style={[styles.chevron, { color: c.textSecondary }]}>
+              {soundExpanded ? '\u25B2' : '\u25BC'}
+            </Text>
+          </View>
+        </TouchableOpacity>
+        {soundExpanded && (
+          <View style={styles.soundPickerContainer}>
+            <SoundPicker selectedSound={sound} onSelectSound={setSound} />
+          </View>
+        )}
+
+        {/* Volume Escalation Toggle */}
+        <View style={[styles.volumeEscalationRow, { borderTopColor: c.border }]}>
+          <View style={styles.volumeEscalationLabel}>
+            <Text style={[styles.volumeEscalationText, { color: c.text }]}>
+              {t('alarmSet.volumeEscalation')}
+            </Text>
+            <Text style={[styles.volumeEscalationDesc, { color: c.textMuted }]}>
+              {t('alarmSet.volumeEscalationDesc')}
+            </Text>
+          </View>
+          <Switch
+            value={volumeEscalation}
+            onValueChange={setVolumeEscalation}
+            trackColor={{ false: c.border, true: c.primary + '80' }}
+            thumbColor={volumeEscalation ? c.primary : c.textMuted}
+          />
         </View>
       </View>
 
@@ -422,6 +472,49 @@ const styles = StyleSheet.create({
   },
   dayChipTextActive: {
     fontWeight: '700',
+  },
+
+  // Sound
+  soundHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 4,
+  },
+  soundHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  soundCurrentLabel: {
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  chevron: {
+    fontSize: 10,
+  },
+  soundPickerContainer: {
+    marginTop: 12,
+  },
+  volumeEscalationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  volumeEscalationLabel: {
+    flex: 1,
+    marginRight: 12,
+  },
+  volumeEscalationText: {
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  volumeEscalationDesc: {
+    fontSize: 12,
+    marginTop: 2,
   },
 
   // Mission

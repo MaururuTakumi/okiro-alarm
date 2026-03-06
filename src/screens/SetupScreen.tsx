@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAlarms } from '../contexts/AlarmContext';
 import { useFreemium } from '../contexts/FreemiumContext';
-import { RootStackParamList, MissionType, MissionConfig } from '../utils/types';
+import { RootStackParamList, Alarm, MissionType, MissionConfig } from '../utils/types';
 import { requestPermissions, scheduleAlarmNotification } from '../utils/notifications';
 import WheelPicker from '../components/WheelPicker';
 
@@ -66,7 +66,7 @@ export default function SetupScreen() {
       if (missionType === 'steps') missionConfig.stepsTarget = 30;
       if (missionType === 'shake') missionConfig.shakeTarget = 30;
 
-      const alarm = {
+      const alarm: Alarm = {
         id: uuidv4(),
         hour,
         minute,

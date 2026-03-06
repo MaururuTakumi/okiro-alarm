@@ -98,7 +98,20 @@
     "stepsCount": "必要歩数",
     "shakeCount": "必要シェイク回数",
     "soundDefault": "デフォルト",
-    "volume": "音量"
+    "volume": "音量",
+    "soundTypes": {
+      "default": "デフォルト",
+      "gentle": "やさしい目覚め",
+      "energetic": "エネルギッシュ",
+      "nature": "自然の音",
+      "bell": "ベル",
+      "digital": "デジタル",
+      "melody": "メロディー",
+      "vibrate": "バイブレーションのみ"
+    },
+    "volumeEscalation": "音量を徐々に上げる",
+    "volumeEscalationDesc": "アラーム音量が徐々に大きくなります",
+    "soundPreview": "タップしてプレビュー"
   },
   "mission": {
     "title": "ミッションを完了してアラームを止めましょう",

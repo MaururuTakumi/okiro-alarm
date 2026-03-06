@@ -98,7 +98,20 @@
     "stepsCount": "Steps Required",
     "shakeCount": "Shakes Required",
     "soundDefault": "Default",
-    "volume": "Volume"
+    "volume": "Volume",
+    "soundTypes": {
+      "default": "Default",
+      "gentle": "Gentle Wake",
+      "energetic": "Energetic",
+      "nature": "Nature Sounds",
+      "bell": "Bell",
+      "digital": "Digital",
+      "melody": "Melody",
+      "vibrate": "Vibration Only"
+    },
+    "volumeEscalation": "Gradually increase volume",
+    "volumeEscalationDesc": "Alarm volume will gradually increase",
+    "soundPreview": "Tap to preview"
   },
   "mission": {
     "title": "Complete Mission to Stop Alarm",
