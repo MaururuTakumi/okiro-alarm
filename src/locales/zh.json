@@ -1,0 +1,121 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "done": "完成",
+    "ok": "确定",
+    "on": "开启",
+    "off": "关闭"
+  },
+  "home": {
+    "title": "闹钟",
+    "noAlarms": "没有设置闹钟",
+    "addAlarm": "添加闹钟"
+  },
+  "alarmSet": {
+    "title": "设置闹钟",
+    "editTitle": "编辑闹钟",
+    "time": "时间",
+    "repeat": "重复",
+    "mission": "任务",
+    "sound": "铃声",
+    "label": "标签",
+    "labelPlaceholder": "闹钟标签",
+    "days": {
+      "mon": "一",
+      "tue": "二",
+      "wed": "三",
+      "thu": "四",
+      "fri": "五",
+      "sat": "六",
+      "sun": "日"
+    },
+    "missionTypes": {
+      "none": "无",
+      "math": "数学题",
+      "barcode": "扫描条码",
+      "photo": "拍照匹配",
+      "steps": "走路计步",
+      "shake": "摇晃手机"
+    },
+    "difficulty": "难度",
+    "difficultyLevels": {
+      "1": "简单",
+      "2": "中等",
+      "3": "困难"
+    },
+    "stepsCount": "所需步数",
+    "shakeCount": "所需摇晃次数"
+  },
+  "mission": {
+    "title": "完成任务以关闭闹钟",
+    "math": {
+      "title": "解答数学题",
+      "submit": "提交",
+      "correct": "正确！",
+      "wrong": "错误！再试一次。",
+      "placeholder": "你的答案"
+    },
+    "barcode": {
+      "title": "扫描条码",
+      "instruction": "扫描任意条码以关闭闹钟",
+      "success": "扫描成功！"
+    },
+    "photo": {
+      "title": "拍照",
+      "instruction": "拍摄注册地点的照片",
+      "capture": "拍照",
+      "success": "照片匹配成功！"
+    },
+    "steps": {
+      "title": "走路",
+      "progress": "{{current}} / {{target}} 步",
+      "success": "步数完成！"
+    },
+    "shake": {
+      "title": "摇晃手机",
+      "progress": "{{current}} / {{target}} 次",
+      "success": "摇晃完成！"
+    },
+    "completed": "任务完成！",
+    "alarmStopped": "闹钟已关闭"
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "theme": "主题",
+    "themes": {
+      "light": "浅色",
+      "dark": "深色"
+    },
+    "languages": {
+      "en": "English",
+      "ja": "日本語",
+      "zh": "中文",
+      "ko": "한국어"
+    },
+    "about": "关于",
+    "version": "版本",
+    "subscription": "订阅"
+  },
+  "freemium": {
+    "free": "免费",
+    "pro": "Pro",
+    "upgradeTitle": "升级到Pro",
+    "upgradeMessage": "解锁所有任务，包括扫描条码、拍照匹配、走路计步和摇晃手机任务。",
+    "upgradeButton": "升级",
+    "proOnly": "仅限Pro",
+    "currentPlan": "当前方案",
+    "restorePurchase": "恢复购买"
+  },
+  "errors": {
+    "cameraPermission": "需要相机权限",
+    "sensorUnavailable": "此设备不支持该传感器",
+    "notificationPermission": "需要通知权限",
+    "saveFailed": "保存闹钟失败",
+    "loadFailed": "加载闹钟失败",
+    "unknown": "发生未知错误"
+  }
+}

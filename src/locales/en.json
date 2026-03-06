@@ -1,0 +1,121 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "done": "Done",
+    "ok": "OK",
+    "on": "ON",
+    "off": "OFF"
+  },
+  "home": {
+    "title": "Alarms",
+    "noAlarms": "No alarms set",
+    "addAlarm": "Add Alarm"
+  },
+  "alarmSet": {
+    "title": "Set Alarm",
+    "editTitle": "Edit Alarm",
+    "time": "Time",
+    "repeat": "Repeat",
+    "mission": "Mission",
+    "sound": "Sound",
+    "label": "Label",
+    "labelPlaceholder": "Alarm label",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "missionTypes": {
+      "none": "None",
+      "math": "Math Problem",
+      "barcode": "Barcode Scan",
+      "photo": "Photo Match",
+      "steps": "Walk Steps",
+      "shake": "Shake Phone"
+    },
+    "difficulty": "Difficulty",
+    "difficultyLevels": {
+      "1": "Easy",
+      "2": "Medium",
+      "3": "Hard"
+    },
+    "stepsCount": "Steps Required",
+    "shakeCount": "Shakes Required"
+  },
+  "mission": {
+    "title": "Complete Mission to Stop Alarm",
+    "math": {
+      "title": "Solve the Problem",
+      "submit": "Submit",
+      "correct": "Correct!",
+      "wrong": "Wrong! Try again.",
+      "placeholder": "Your answer"
+    },
+    "barcode": {
+      "title": "Scan Barcode",
+      "instruction": "Scan any barcode to stop the alarm",
+      "success": "Barcode scanned!"
+    },
+    "photo": {
+      "title": "Take a Photo",
+      "instruction": "Take a photo of the registered location",
+      "capture": "Take Photo",
+      "success": "Photo matched!"
+    },
+    "steps": {
+      "title": "Walk Steps",
+      "progress": "{{current}} / {{target}} steps",
+      "success": "Steps completed!"
+    },
+    "shake": {
+      "title": "Shake Your Phone",
+      "progress": "{{current}} / {{target}} shakes",
+      "success": "Shaking completed!"
+    },
+    "completed": "Mission Complete!",
+    "alarmStopped": "Alarm stopped"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "languages": {
+      "en": "English",
+      "ja": "Japanese",
+      "zh": "Chinese",
+      "ko": "Korean"
+    },
+    "about": "About",
+    "version": "Version",
+    "subscription": "Subscription"
+  },
+  "freemium": {
+    "free": "Free",
+    "pro": "Pro",
+    "upgradeTitle": "Upgrade to Pro",
+    "upgradeMessage": "Unlock all missions including Barcode Scan, Photo Match, Walking, and Shake missions.",
+    "upgradeButton": "Upgrade",
+    "proOnly": "Pro Only",
+    "currentPlan": "Current Plan",
+    "restorePurchase": "Restore Purchase"
+  },
+  "errors": {
+    "cameraPermission": "Camera permission is required",
+    "sensorUnavailable": "Sensor is not available on this device",
+    "notificationPermission": "Notification permission is required",
+    "saveFailed": "Failed to save alarm",
+    "loadFailed": "Failed to load alarms",
+    "unknown": "An unknown error occurred"
+  }
+}

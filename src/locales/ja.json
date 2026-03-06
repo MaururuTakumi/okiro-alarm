@@ -1,0 +1,121 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "done": "完了",
+    "ok": "OK",
+    "on": "オン",
+    "off": "オフ"
+  },
+  "home": {
+    "title": "アラーム",
+    "noAlarms": "アラームが設定されていません",
+    "addAlarm": "アラームを追加"
+  },
+  "alarmSet": {
+    "title": "アラーム設定",
+    "editTitle": "アラーム編集",
+    "time": "時刻",
+    "repeat": "繰り返し",
+    "mission": "ミッション",
+    "sound": "サウンド",
+    "label": "ラベル",
+    "labelPlaceholder": "アラームのラベル",
+    "days": {
+      "mon": "月",
+      "tue": "火",
+      "wed": "水",
+      "thu": "木",
+      "fri": "金",
+      "sat": "土",
+      "sun": "日"
+    },
+    "missionTypes": {
+      "none": "なし",
+      "math": "計算問題",
+      "barcode": "バーコードスキャン",
+      "photo": "写真撮影",
+      "steps": "ウォーキング",
+      "shake": "シェイク"
+    },
+    "difficulty": "難易度",
+    "difficultyLevels": {
+      "1": "かんたん",
+      "2": "ふつう",
+      "3": "むずかしい"
+    },
+    "stepsCount": "必要歩数",
+    "shakeCount": "必要シェイク回数"
+  },
+  "mission": {
+    "title": "ミッションを完了してアラームを止めましょう",
+    "math": {
+      "title": "計算問題を解こう",
+      "submit": "回答する",
+      "correct": "正解！",
+      "wrong": "不正解！もう一度。",
+      "placeholder": "あなたの回答"
+    },
+    "barcode": {
+      "title": "バーコードをスキャン",
+      "instruction": "バーコードをスキャンしてアラームを止めましょう",
+      "success": "スキャン完了！"
+    },
+    "photo": {
+      "title": "写真を撮ろう",
+      "instruction": "登録した場所の写真を撮影してください",
+      "capture": "撮影する",
+      "success": "写真が一致しました！"
+    },
+    "steps": {
+      "title": "歩こう",
+      "progress": "{{current}} / {{target}} 歩",
+      "success": "ウォーキング完了！"
+    },
+    "shake": {
+      "title": "スマホを振ろう",
+      "progress": "{{current}} / {{target}} 回",
+      "success": "シェイク完了！"
+    },
+    "completed": "ミッション完了！",
+    "alarmStopped": "アラームを停止しました"
+  },
+  "settings": {
+    "title": "設定",
+    "language": "言語",
+    "theme": "テーマ",
+    "themes": {
+      "light": "ライト",
+      "dark": "ダーク"
+    },
+    "languages": {
+      "en": "English",
+      "ja": "日本語",
+      "zh": "中文",
+      "ko": "한국어"
+    },
+    "about": "このアプリについて",
+    "version": "バージョン",
+    "subscription": "サブスクリプション"
+  },
+  "freemium": {
+    "free": "無料",
+    "pro": "Pro",
+    "upgradeTitle": "Proにアップグレード",
+    "upgradeMessage": "バーコードスキャン、写真撮影、ウォーキング、シェイクなど、すべてのミッションをアンロックできます。",
+    "upgradeButton": "アップグレード",
+    "proOnly": "Pro限定",
+    "currentPlan": "現在のプラン",
+    "restorePurchase": "購入を復元"
+  },
+  "errors": {
+    "cameraPermission": "カメラの許可が必要です",
+    "sensorUnavailable": "このデバイスではセンサーを利用できません",
+    "notificationPermission": "通知の許可が必要です",
+    "saveFailed": "アラームの保存に失敗しました",
+    "loadFailed": "アラームの読み込みに失敗しました",
+    "unknown": "不明なエラーが発生しました"
+  }
+}
