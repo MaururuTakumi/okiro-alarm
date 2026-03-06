@@ -1,15 +1,18 @@
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Alarm, DayOfWeek } from './types';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
+if (Platform.OS !== 'web') {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+      shouldShowBanner: true,
+      shouldShowList: true,
+    }),
+  });
+}
 
 const dayMap: Record<DayOfWeek, number> = {
   sun: 1,
@@ -22,11 +25,14 @@ const dayMap: Record<DayOfWeek, number> = {
 };
 
 export async function requestPermissions() {
+  if (Platform.OS === 'web') return false;
   const { status } = await Notifications.requestPermissionsAsync();
   return status === 'granted';
 }
 
 export async function scheduleAlarmNotification(alarm: Alarm) {
+  if (Platform.OS === 'web') return;
+
   await cancelAlarmNotification(alarm.id);
 
   if (!alarm.enabled) return;
@@ -66,6 +72,7 @@ export async function scheduleAlarmNotification(alarm: Alarm) {
 }
 
 export async function cancelAlarmNotification(alarmId: string) {
+  if (Platform.OS === 'web') return;
   const scheduled = await Notifications.getAllScheduledNotificationsAsync();
   for (const notif of scheduled) {
     if (notif.content.data?.alarmId === alarmId) {
