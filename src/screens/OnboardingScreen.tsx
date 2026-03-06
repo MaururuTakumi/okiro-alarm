@@ -140,6 +140,7 @@ export default function OnboardingScreen() {
   const renderPage = ({ item }: { item: PageData }) => (
     <View style={[styles.page, { width }]}>
       <View style={styles.iconContainer}>
+        <View style={[styles.iconGlow, { backgroundColor: c.primary }]} />
         {item.renderIcon()}
       </View>
       <Text style={[styles.title, { color: c.text }]}>
@@ -174,6 +175,7 @@ export default function OnboardingScreen() {
       />
 
       <View style={styles.bottomSection}>
+        <View style={[styles.bottomGradientOverlay, { backgroundColor: c.background }]} />
         <View style={styles.dotsRow}>
           {pages.map((_, i) => (
             <View
@@ -188,7 +190,13 @@ export default function OnboardingScreen() {
         </View>
 
         <TouchableOpacity
-          style={[styles.nextButton, { backgroundColor: c.primary }]}
+          style={[
+            styles.nextButton,
+            {
+              backgroundColor: c.primary,
+              shadowColor: c.primary,
+            },
+          ]}
           onPress={goToNext}
           activeOpacity={0.8}
         >
@@ -225,6 +233,15 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginBottom: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconGlow: {
+    position: 'absolute',
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    opacity: 0.1,
   },
   title: {
     fontSize: 32,
@@ -272,19 +289,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     alignItems: 'center',
   },
+  bottomGradientOverlay: {
+    position: 'absolute',
+    top: -40,
+    left: 0,
+    right: 0,
+    height: 40,
+    opacity: 0.85,
+  },
   dotsRow: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 10,
     marginBottom: 24,
   },
   dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
   },
   dotActive: {
-    width: 24,
-    borderRadius: 4,
+    width: 28,
+    borderRadius: 5,
   },
   nextButton: {
     width: '100%',
@@ -292,6 +317,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    elevation: 8,
   },
   nextButtonText: {
     color: '#FFFFFF',

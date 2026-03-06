@@ -43,7 +43,7 @@
     },
     "next": "次へ",
     "back": "戻る",
-    "stepOf": "{{current}} / {{total}}"
+    "stepOf": "{{current}}/{{total}}"
   },
   "common": {
     "save": "保存",
@@ -58,7 +58,10 @@
   "home": {
     "title": "アラーム",
     "noAlarms": "アラームが設定されていません",
-    "addAlarm": "アラームを追加"
+    "addAlarm": "アラームを追加",
+    "addHint": "+ をタップして最初のアラームを作成",
+    "nextAlarm": "次のアラーム",
+    "remaining": "後"
   },
   "alarmSet": {
     "title": "アラーム設定",
@@ -93,7 +96,9 @@
       "3": "むずかしい"
     },
     "stepsCount": "必要歩数",
-    "shakeCount": "必要シェイク回数"
+    "shakeCount": "必要シェイク回数",
+    "soundDefault": "デフォルト",
+    "volume": "音量"
   },
   "mission": {
     "title": "ミッションを完了してアラームを止めましょう",
@@ -144,7 +149,13 @@
     },
     "about": "このアプリについて",
     "version": "バージョン",
-    "subscription": "サブスクリプション"
+    "subscription": "サブスクリプション",
+    "pro": "Okiro Pro",
+    "proDesc": "すべてのミッションと機能をアンロック",
+    "darkMode": "ダークモード",
+    "notifications": "通知",
+    "helpFeedback": "ヘルプ・フィードバック",
+    "rateApp": "Okiroを評価"
   },
   "freemium": {
     "free": "無料",
@@ -154,7 +165,29 @@
     "upgradeButton": "アップグレード",
     "proOnly": "Pro限定",
     "currentPlan": "現在のプラン",
-    "restorePurchase": "購入を復元"
+    "restorePurchase": "購入を復元",
+    "proRequired": "Pro版が必要です"
+  },
+  "pro": {
+    "heroTitle": "Okiroの全機能を\nアンロック",
+    "heroSubtitle": "すべてのミッション、制限なし、より良い朝を。",
+    "feature1": "すべての起床ミッションが利用可能",
+    "feature2": "無制限のアラームプリセット",
+    "feature3": "カスタムアラームサウンド",
+    "feature4": "優先サポート＆アップデート",
+    "yearly": "年額プラン",
+    "monthly": "月額プラン",
+    "freeTrial": "7日間無料体験",
+    "noTrial": "無料体験なし",
+    "yearlyPrice": "¥300/月",
+    "yearlyTotal": "¥3,600/年",
+    "monthlyPrice": "¥600/月",
+    "monthlyTotal": "¥7,200/年",
+    "bestValue": "29% OFF",
+    "startTrial": "無料体験を始める",
+    "disclaimer": "7日間無料、以降¥3,600/年。いつでもキャンセル可能。",
+    "socialProof": "5,000万人のユーザーが\n体験している朝を、あなたも",
+    "ranked": "97カ国で#1のアラームアプリ"
   },
   "errors": {
     "cameraPermission": "カメラの許可が必要です",

@@ -43,7 +43,7 @@
     },
     "next": "Next",
     "back": "Back",
-    "stepOf": "{{current}} of {{total}}"
+    "stepOf": "{{current}}/{{total}}"
   },
   "common": {
     "save": "Save",
@@ -58,7 +58,10 @@
   "home": {
     "title": "Alarms",
     "noAlarms": "No alarms set",
-    "addAlarm": "Add Alarm"
+    "addAlarm": "Add Alarm",
+    "addHint": "Tap + to create your first alarm",
+    "nextAlarm": "Next alarm",
+    "remaining": "remaining"
   },
   "alarmSet": {
     "title": "Set Alarm",
@@ -93,7 +96,9 @@
       "3": "Hard"
     },
     "stepsCount": "Steps Required",
-    "shakeCount": "Shakes Required"
+    "shakeCount": "Shakes Required",
+    "soundDefault": "Default",
+    "volume": "Volume"
   },
   "mission": {
     "title": "Complete Mission to Stop Alarm",
@@ -144,7 +149,13 @@
     },
     "about": "About",
     "version": "Version",
-    "subscription": "Subscription"
+    "subscription": "Subscription",
+    "pro": "Okiro Pro",
+    "proDesc": "Unlock all missions & features",
+    "darkMode": "Dark Mode",
+    "notifications": "Notifications",
+    "helpFeedback": "Help & Feedback",
+    "rateApp": "Rate Okiro"
   },
   "freemium": {
     "free": "Free",
@@ -154,7 +165,29 @@
     "upgradeButton": "Upgrade",
     "proOnly": "Pro Only",
     "currentPlan": "Current Plan",
-    "restorePurchase": "Restore Purchase"
+    "restorePurchase": "Restore Purchase",
+    "proRequired": "Pro Required"
+  },
+  "pro": {
+    "heroTitle": "Unlock the Full\nOkiro Experience",
+    "heroSubtitle": "All missions, no limits, better mornings.",
+    "feature1": "All wake-up missions unlocked",
+    "feature2": "Unlimited alarm presets",
+    "feature3": "Custom alarm sounds",
+    "feature4": "Priority support & updates",
+    "yearly": "Yearly",
+    "monthly": "Monthly",
+    "freeTrial": "7-day free trial",
+    "noTrial": "No free trial",
+    "yearlyPrice": "¥300/mo",
+    "yearlyTotal": "¥3,600/year",
+    "monthlyPrice": "¥600/mo",
+    "monthlyTotal": "¥7,200/year",
+    "bestValue": "29% OFF",
+    "startTrial": "Start Free Trial",
+    "disclaimer": "7 days free, then ¥3,600/year. Cancel anytime.",
+    "socialProof": "Experience the mornings\n50 million users enjoy",
+    "ranked": "#1 Alarm app in 97 countries"
   },
   "errors": {
     "cameraPermission": "Camera permission is required",
