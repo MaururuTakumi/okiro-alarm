@@ -1,4 +1,50 @@
 {
+  "onboarding": {
+    "page1": {
+      "title": "アラーム1つで、\n言い訳ゼロ。",
+      "subtitle": "5個もアラームを設定するのはもう終わり。Okiroはミッション付きで確実にあなたを起こします。"
+    },
+    "page2": {
+      "title": "脳を\n目覚めさせろ",
+      "subtitle": "計算問題、ウォーキング、シェイク — あなたを確実に起こすミッションを選択。睡眠科学に基づいた設計。",
+      "stat1Label": "起床\n成功率",
+      "stat1Value": "95%",
+      "stat2Label": "スヌーズ\n削減",
+      "stat2Value": "80%"
+    },
+    "page3": {
+      "title": "日本発。\n早起きのために。",
+      "subtitle": "Okiro（起きろ）は日本語で「起きなさい！」の意味。シンプルで、パワフルで、甘くない目覚まし。",
+      "cta": "はじめる"
+    },
+    "next": "次へ",
+    "skip": "スキップ"
+  },
+  "setup": {
+    "step1": {
+      "title": "起床時刻を設定",
+      "subtitle": "何時に起きたいですか？"
+    },
+    "step2": {
+      "title": "ミッションを選択",
+      "subtitle": "アラームを止めるためのチャレンジを選ぼう"
+    },
+    "step3": {
+      "title": "通知を許可",
+      "subtitle": "アラームを鳴らすために許可が必要です",
+      "allowButton": "通知を許可する",
+      "allowed": "通知が有効です",
+      "description": "アラームと通知の許可で、画面ロック中でも鳴らせます"
+    },
+    "step4": {
+      "title": "準備完了！",
+      "subtitle": "最初のアラームがセットされました。朝を制する準備はOK。",
+      "finishButton": "Okiroを使い始める"
+    },
+    "next": "次へ",
+    "back": "戻る",
+    "stepOf": "{{current}} / {{total}}"
+  },
   "common": {
     "save": "保存",
     "cancel": "キャンセル",

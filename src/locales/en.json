@@ -1,4 +1,50 @@
 {
+  "onboarding": {
+    "page1": {
+      "title": "One alarm.\nZero excuses.",
+      "subtitle": "Stop setting 5 alarms. Okiro wakes you up with a mission — so you actually get out of bed."
+    },
+    "page2": {
+      "title": "Your brain\nneeds a challenge",
+      "subtitle": "Math problems, walking, shaking — choose the mission that forces you awake. Backed by sleep science.",
+      "stat1Label": "Wake-up\nSuccess",
+      "stat1Value": "95%",
+      "stat2Label": "Less\nSnoozing",
+      "stat2Value": "80%"
+    },
+    "page3": {
+      "title": "Made in Japan.\nBuilt for early risers.",
+      "subtitle": "Okiro (起きろ) means \"Wake up!\" in Japanese. Simple, powerful, no-nonsense alarm.",
+      "cta": "Get Started"
+    },
+    "next": "Next",
+    "skip": "Skip"
+  },
+  "setup": {
+    "step1": {
+      "title": "Set your wake-up time",
+      "subtitle": "When do you want to wake up?"
+    },
+    "step2": {
+      "title": "Choose your mission",
+      "subtitle": "Pick a challenge to stop the alarm"
+    },
+    "step3": {
+      "title": "Allow notifications",
+      "subtitle": "We need permission to ring your alarm",
+      "allowButton": "Allow Notifications",
+      "allowed": "Notifications enabled",
+      "description": "Alarm and notification permissions let us ring when the phone is locked"
+    },
+    "step4": {
+      "title": "You're all set!",
+      "subtitle": "Your first alarm is ready. Time to own your mornings.",
+      "finishButton": "Start Using Okiro"
+    },
+    "next": "Next",
+    "back": "Back",
+    "stepOf": "{{current}} of {{total}}"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",

@@ -6,43 +6,67 @@ export interface AppTheme {
   colors: {
     background: string;
     surface: string;
+    surfaceElevated: string;
     text: string;
     textSecondary: string;
+    textMuted: string;
     primary: string;
+    primaryDark: string;
     accent: string;
     border: string;
     danger: string;
     success: string;
+    cardBackground: string;
+    gradient: {
+      start: string;
+      end: string;
+    };
   };
 }
 
 const lightTheme: AppTheme = {
   mode: 'light',
   colors: {
-    background: '#F5F5F5',
+    background: '#F8F5F0',
     surface: '#FFFFFF',
+    surfaceElevated: '#FFF8F3',
     text: '#1A1A1A',
     textSecondary: '#666666',
-    primary: '#4A90D9',
-    accent: '#FF6B35',
-    border: '#E0E0E0',
+    textMuted: '#999999',
+    primary: '#FF6B35',
+    primaryDark: '#E55A28',
+    accent: '#FFB088',
+    border: '#F0E6DC',
     danger: '#E53935',
     success: '#43A047',
+    cardBackground: '#FFFFFF',
+    gradient: {
+      start: '#FF6B35',
+      end: '#FF9A6C',
+    },
   },
 };
 
 const darkTheme: AppTheme = {
   mode: 'dark',
   colors: {
-    background: '#121212',
-    surface: '#1E1E1E',
-    text: '#FFFFFF',
-    textSecondary: '#AAAAAA',
-    primary: '#64B5F6',
-    accent: '#FF8A65',
-    border: '#333333',
-    danger: '#EF5350',
-    success: '#66BB6A',
+    background: '#0A0A0C',
+    surface: '#141418',
+    surfaceElevated: '#1C1C22',
+    text: '#F5F5F7',
+    textSecondary: '#8E8E93',
+    textMuted: '#48484A',
+    primary: '#FF6B35',
+    primaryDark: '#E55A28',
+    accent: '#FF9A6C',
+    border: '#2C2C2E',
+    danger: '#FF453A',
+    success: '#32D74B',
+    cardBackground: '#1C1C22',
+    gradient: {
+      start: '#FF6B35',
+      end: '#FF9A6C',
+    },
   },
 };
 

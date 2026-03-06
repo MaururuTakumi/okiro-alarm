@@ -21,6 +21,8 @@ export interface MissionConfig {
 }
 
 export type RootStackParamList = {
+  Onboarding: undefined;
+  Setup: undefined;
   MainTabs: undefined;
   AlarmSet: { alarmId?: string };
   Mission: { alarmId: string; missionType: MissionType; missionConfig: MissionConfig };
