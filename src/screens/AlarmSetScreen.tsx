@@ -25,7 +25,7 @@ type Nav = NativeStackNavigationProp<RootStackParamList>;
 type Route = RouteProp<RootStackParamList, 'AlarmSet'>;
 
 const ALL_DAYS: DayOfWeek[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-const MISSION_TYPES: MissionType[] = ['none', 'math', 'barcode', 'photo', 'steps', 'shake'];
+const MISSION_TYPES: MissionType[] = ['none', 'math', 'barcode', 'photo', 'steps', 'shake', 'memory', 'typing', 'squats'];
 
 const MISSION_ICONS: Record<MissionType, string> = {
   none: '',
@@ -34,6 +34,9 @@ const MISSION_ICONS: Record<MissionType, string> = {
   photo: '',
   steps: '',
   shake: '',
+  memory: '',
+  typing: '',
+  squats: '',
 };
 
 export default function AlarmSetScreen() {
@@ -56,6 +59,9 @@ export default function AlarmSetScreen() {
   const [mathDifficulty, setMathDifficulty] = useState<1 | 2 | 3>(existing?.missionConfig?.mathDifficulty ?? 1);
   const [stepsTarget, setStepsTarget] = useState(existing?.missionConfig?.stepsTarget ?? 30);
   const [shakeTarget, setShakeTarget] = useState(existing?.missionConfig?.shakeTarget ?? 30);
+  const [memoryDifficulty, setMemoryDifficulty] = useState<1 | 2 | 3>(existing?.missionConfig?.memoryDifficulty ?? 1);
+  const [typingDifficulty, setTypingDifficulty] = useState<1 | 2 | 3>(existing?.missionConfig?.typingDifficulty ?? 1);
+  const [squatsTarget, setSquatsTarget] = useState(existing?.missionConfig?.squatsTarget ?? 10);
   const [sound, setSound] = useState<AlarmSound>((existing?.sound as AlarmSound) ?? 'default');
   const [volumeEscalation, setVolumeEscalation] = useState(existing?.volumeEscalation ?? false);
   const [soundExpanded, setSoundExpanded] = useState(false);
@@ -87,6 +93,9 @@ export default function AlarmSetScreen() {
     if (missionType === 'math') missionConfig.mathDifficulty = mathDifficulty;
     if (missionType === 'steps') missionConfig.stepsTarget = stepsTarget;
     if (missionType === 'shake') missionConfig.shakeTarget = shakeTarget;
+    if (missionType === 'memory') missionConfig.memoryDifficulty = memoryDifficulty;
+    if (missionType === 'typing') missionConfig.typingDifficulty = typingDifficulty;
+    if (missionType === 'squats') missionConfig.squatsTarget = squatsTarget;
 
     const alarm: Alarm = {
       id: editingId ?? uuidv4(),
@@ -99,6 +108,10 @@ export default function AlarmSetScreen() {
       missionConfig,
       sound,
       volumeEscalation,
+      preventSnooze: existing?.preventSnooze ?? false,
+      repeatAlarm: existing?.repeatAlarm ?? false,
+      repeatInterval: existing?.repeatInterval ?? 3,
+      maxRepeats: existing?.maxRepeats ?? 3,
     };
 
     if (editingId) {
@@ -377,6 +390,104 @@ export default function AlarmSetScreen() {
               <TouchableOpacity
                 style={[styles.stepperBtn, { backgroundColor: c.surfaceElevated, borderColor: c.border }]}
                 onPress={() => setShakeTarget(Math.min(100, shakeTarget + 10))}
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.stepperBtnText, { color: c.primary }]}>+</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {/* Memory Config */}
+        {missionType === 'memory' && (
+          <View style={styles.configSection}>
+            <Text style={[styles.configLabel, { color: c.textSecondary }]}>
+              {t('alarmSet.difficulty')}
+            </Text>
+            <View style={styles.configOptionsRow}>
+              {([1, 2, 3] as const).map((d) => {
+                const active = memoryDifficulty === d;
+                return (
+                  <TouchableOpacity
+                    key={d}
+                    style={[
+                      styles.configOption,
+                      { backgroundColor: c.surfaceElevated, borderColor: c.border },
+                      active && { backgroundColor: c.primary, borderColor: c.primary },
+                    ]}
+                    onPress={() => setMemoryDifficulty(d)}
+                    activeOpacity={0.7}
+                  >
+                    <Text
+                      style={[
+                        styles.configOptionText,
+                        { color: active ? '#FFFFFF' : c.text },
+                      ]}
+                    >
+                      {t(`alarmSet.difficultyLevels.${d}`)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        )}
+
+        {/* Typing Config */}
+        {missionType === 'typing' && (
+          <View style={styles.configSection}>
+            <Text style={[styles.configLabel, { color: c.textSecondary }]}>
+              {t('alarmSet.difficulty')}
+            </Text>
+            <View style={styles.configOptionsRow}>
+              {([1, 2, 3] as const).map((d) => {
+                const active = typingDifficulty === d;
+                return (
+                  <TouchableOpacity
+                    key={d}
+                    style={[
+                      styles.configOption,
+                      { backgroundColor: c.surfaceElevated, borderColor: c.border },
+                      active && { backgroundColor: c.primary, borderColor: c.primary },
+                    ]}
+                    onPress={() => setTypingDifficulty(d)}
+                    activeOpacity={0.7}
+                  >
+                    <Text
+                      style={[
+                        styles.configOptionText,
+                        { color: active ? '#FFFFFF' : c.text },
+                      ]}
+                    >
+                      {t(`alarmSet.difficultyLevels.${d}`)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        )}
+
+        {/* Squats Config */}
+        {missionType === 'squats' && (
+          <View style={styles.configSection}>
+            <Text style={[styles.configLabel, { color: c.textSecondary }]}>
+              {t('alarmSet.squatsCount')}
+            </Text>
+            <View style={styles.stepperRow}>
+              <TouchableOpacity
+                style={[styles.stepperBtn, { backgroundColor: c.surfaceElevated, borderColor: c.border }]}
+                onPress={() => setSquatsTarget(Math.max(5, squatsTarget - 5))}
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.stepperBtnText, { color: c.primary }]}>-</Text>
+              </TouchableOpacity>
+              <View style={[styles.stepperValueContainer, { backgroundColor: c.surfaceElevated }]}>
+                <Text style={[styles.stepperValue, { color: c.text }]}>{squatsTarget}</Text>
+              </View>
+              <TouchableOpacity
+                style={[styles.stepperBtn, { backgroundColor: c.surfaceElevated, borderColor: c.border }]}
+                onPress={() => setSquatsTarget(Math.min(50, squatsTarget + 5))}
                 activeOpacity={0.7}
               >
                 <Text style={[styles.stepperBtnText, { color: c.primary }]}>+</Text>

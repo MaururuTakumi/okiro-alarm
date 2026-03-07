@@ -166,6 +166,10 @@ export default function App() {
           alarmId: data.alarmId as string,
           missionType: data.missionType as MissionType,
           missionConfig: (data.missionConfig as MissionConfig) || {},
+          preventSnooze: data.preventSnooze as boolean | undefined,
+          repeatAlarm: data.repeatAlarm as boolean | undefined,
+          repeatInterval: data.repeatInterval as number | undefined,
+          maxRepeats: data.maxRepeats as number | undefined,
         });
       }
     });

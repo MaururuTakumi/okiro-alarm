@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAlarms } from '../contexts/AlarmContext';
 import { useFreemium } from '../contexts/FreemiumContext';
-import { RootStackParamList, Alarm, MissionType, MissionConfig } from '../utils/types';
+import { RootStackParamList, MissionType, MissionConfig, AlarmSound } from '../utils/types';
 import { requestPermissions, scheduleAlarmNotification } from '../utils/notifications';
 import WheelPicker from '../components/WheelPicker';
 
@@ -60,13 +60,12 @@ export default function SetupScreen() {
     if (step < totalSteps) {
       setStep(step + 1);
     } else {
-      // Create first alarm and finish setup
       const missionConfig: MissionConfig = {};
       if (missionType === 'math') missionConfig.mathDifficulty = 1;
       if (missionType === 'steps') missionConfig.stepsTarget = 30;
       if (missionType === 'shake') missionConfig.shakeTarget = 30;
 
-      const alarm: Alarm = {
+      const alarm = {
         id: uuidv4(),
         hour,
         minute,
@@ -75,13 +74,24 @@ export default function SetupScreen() {
         days: [],
         missionType,
         missionConfig,
-        sound: 'default',
+        sound: 'default' as AlarmSound,
+        preventSnooze: false,
+        repeatAlarm: false,
+        repeatInterval: 3,
+        maxRepeats: 3,
       };
 
-      addAlarm(alarm);
-      await scheduleAlarmNotification(alarm);
-      await AsyncStorage.setItem(SETUP_COMPLETED_KEY, 'true');
-      navigation.replace('MainTabs');
+      try {
+        addAlarm(alarm);
+        await scheduleAlarmNotification(alarm).catch((e) => console.warn('Notif error:', e));
+        await AsyncStorage.setItem(SETUP_COMPLETED_KEY, 'true');
+      } catch (e) {
+        console.warn('Setup alarm error:', e);
+      }
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MainTabs' }],
+      });
     }
   }, [step, hour, minute, missionType, addAlarm, navigation]);
 
@@ -419,6 +429,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingBottom: Platform.OS === 'web' ? 30 : 50,
     alignItems: 'center',
+    zIndex: 10,
   },
   backButton: {
     marginBottom: 12,

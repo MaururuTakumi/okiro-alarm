@@ -37,12 +37,23 @@ export async function scheduleAlarmNotification(alarm: Alarm) {
 
   if (!alarm.enabled) return;
 
+  const notificationData = {
+    alarmId: alarm.id,
+    missionType: alarm.missionType,
+    missionConfig: alarm.missionConfig,
+    preventSnooze: alarm.preventSnooze,
+    repeatAlarm: alarm.repeatAlarm,
+    repeatInterval: alarm.repeatInterval,
+    maxRepeats: alarm.maxRepeats,
+    repeatCount: 0,
+  };
+
   if (alarm.days.length === 0) {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: alarm.label || 'Alarm',
         body: 'Time to wake up!',
-        data: { alarmId: alarm.id, missionType: alarm.missionType, missionConfig: alarm.missionConfig },
+        data: notificationData,
         sound: true,
       },
       trigger: {
@@ -57,7 +68,7 @@ export async function scheduleAlarmNotification(alarm: Alarm) {
         content: {
           title: alarm.label || 'Alarm',
           body: 'Time to wake up!',
-          data: { alarmId: alarm.id, missionType: alarm.missionType, missionConfig: alarm.missionConfig },
+          data: notificationData,
           sound: true,
         },
         trigger: {
@@ -76,6 +87,44 @@ export async function cancelAlarmNotification(alarmId: string) {
   const scheduled = await Notifications.getAllScheduledNotificationsAsync();
   for (const notif of scheduled) {
     if (notif.content.data?.alarmId === alarmId) {
+      await Notifications.cancelScheduledNotificationAsync(notif.identifier);
+    }
+  }
+}
+
+export async function scheduleRepeatNotification(alarm: Alarm, repeatCount: number) {
+  if (Platform.OS === 'web') return;
+  if (!alarm.repeatAlarm) return;
+  if (alarm.maxRepeats !== -1 && repeatCount >= alarm.maxRepeats) return;
+
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: alarm.label || 'Alarm',
+      body: 'Time to wake up!',
+      data: {
+        alarmId: alarm.id,
+        missionType: alarm.missionType,
+        missionConfig: alarm.missionConfig,
+        preventSnooze: alarm.preventSnooze,
+        repeatAlarm: alarm.repeatAlarm,
+        repeatInterval: alarm.repeatInterval,
+        maxRepeats: alarm.maxRepeats,
+        repeatCount: repeatCount + 1,
+      },
+      sound: true,
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+      seconds: alarm.repeatInterval * 60,
+    },
+  });
+}
+
+export async function cancelRepeatNotifications(alarmId: string) {
+  if (Platform.OS === 'web') return;
+  const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+  for (const notif of scheduled) {
+    if (notif.content.data?.alarmId === alarmId && notif.content.data?.repeatCount != null) {
       await Notifications.cancelScheduledNotificationAsync(notif.identifier);
     }
   }

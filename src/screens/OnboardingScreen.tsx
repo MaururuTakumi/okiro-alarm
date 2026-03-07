@@ -290,6 +290,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
     paddingHorizontal: 24,
     alignItems: 'center',
+    zIndex: 10,
   },
   bottomGradientOverlay: {
     position: 'absolute',

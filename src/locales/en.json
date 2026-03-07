@@ -87,7 +87,10 @@
       "barcode": "Barcode Scan",
       "photo": "Photo Match",
       "steps": "Walk Steps",
-      "shake": "Shake Phone"
+      "shake": "Shake Phone",
+      "memory": "Memory Game",
+      "typing": "Typing Challenge",
+      "squats": "Squats"
     },
     "difficulty": "Difficulty",
     "difficultyLevels": {
@@ -97,6 +100,7 @@
     },
     "stepsCount": "Steps Required",
     "shakeCount": "Shakes Required",
+    "squatsCount": "Squats Required",
     "soundDefault": "Default",
     "volume": "Volume",
     "soundTypes": {
@@ -142,6 +146,22 @@
       "title": "Shake Your Phone",
       "progress": "{{current}} / {{target}} shakes",
       "success": "Shaking completed!"
+    },
+    "memory": {
+      "title": "Memory Game",
+      "moves": "Moves: {{count}}",
+      "pairs": "{{current}} / {{total}} pairs"
+    },
+    "typing": {
+      "title": "Type the Text",
+      "instruction": "Type the text below exactly as shown",
+      "placeholder": "Start typing...",
+      "progress": "{{current}} / {{target}} characters"
+    },
+    "squats": {
+      "title": "Do Squats",
+      "instruction": "Hold your phone and do squats",
+      "progress": "{{current}} / {{target}} squats"
     },
     "completed": "Mission Complete!",
     "alarmStopped": "Alarm stopped"

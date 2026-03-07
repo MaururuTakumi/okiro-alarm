@@ -1,4 +1,4 @@
-export type MissionType = 'none' | 'math' | 'barcode' | 'photo' | 'steps' | 'shake';
+export type MissionType = 'none' | 'math' | 'barcode' | 'photo' | 'steps' | 'shake' | 'memory' | 'typing' | 'squats';
 
 export type DayOfWeek = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
 
@@ -15,12 +15,19 @@ export interface Alarm {
   missionConfig: MissionConfig;
   sound: AlarmSound;
   volumeEscalation?: boolean;
+  preventSnooze: boolean;
+  repeatAlarm: boolean;
+  repeatInterval: number;
+  maxRepeats: number;
 }
 
 export interface MissionConfig {
   mathDifficulty?: 1 | 2 | 3;
   stepsTarget?: number;
   shakeTarget?: number;
+  memoryDifficulty?: 1 | 2 | 3;
+  typingDifficulty?: 1 | 2 | 3;
+  squatsTarget?: number;
 }
 
 export type RootStackParamList = {
@@ -29,7 +36,15 @@ export type RootStackParamList = {
   MainTabs: undefined;
   AlarmSet: { alarmId?: string };
   Pro: undefined;
-  Mission: { alarmId: string; missionType: MissionType; missionConfig: MissionConfig };
+  Mission: {
+    alarmId: string;
+    missionType: MissionType;
+    missionConfig: MissionConfig;
+    preventSnooze?: boolean;
+    repeatAlarm?: boolean;
+    repeatInterval?: number;
+    maxRepeats?: number;
+  };
 };
 
 export type MainTabParamList = {

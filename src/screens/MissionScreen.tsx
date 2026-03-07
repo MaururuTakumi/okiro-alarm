@@ -5,7 +5,7 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useTheme } from '../contexts/ThemeContext';
 import { RootStackParamList } from '../utils/types';
 import { cancelAlarmNotification } from '../utils/notifications';
-import { MathMission, BarcodeMission, PhotoMission, StepsMission, ShakeMission } from '../components/missions';
+import { MathMission, BarcodeMission, PhotoMission, StepsMission, ShakeMission, MemoryMission, TypingMission, SquatsMission } from '../components/missions';
 
 type Route = RouteProp<RootStackParamList, 'Mission'>;
 
@@ -49,6 +49,15 @@ export default function MissionScreen() {
       )}
       {missionType === 'shake' && (
         <ShakeMission target={missionConfig.shakeTarget ?? 30} onComplete={handleComplete} />
+      )}
+      {missionType === 'memory' && (
+        <MemoryMission difficulty={missionConfig.memoryDifficulty ?? 1} onComplete={handleComplete} />
+      )}
+      {missionType === 'typing' && (
+        <TypingMission difficulty={missionConfig.typingDifficulty ?? 1} onComplete={handleComplete} />
+      )}
+      {missionType === 'squats' && (
+        <SquatsMission target={missionConfig.squatsTarget ?? 10} onComplete={handleComplete} />
       )}
     </View>
   );

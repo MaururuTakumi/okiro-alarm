@@ -87,7 +87,10 @@
       "barcode": "バーコードスキャン",
       "photo": "写真撮影",
       "steps": "ウォーキング",
-      "shake": "シェイク"
+      "shake": "シェイク",
+      "memory": "神経衰弱",
+      "typing": "タイピング",
+      "squats": "スクワット"
     },
     "difficulty": "難易度",
     "difficultyLevels": {
@@ -97,6 +100,7 @@
     },
     "stepsCount": "必要歩数",
     "shakeCount": "必要シェイク回数",
+    "squatsCount": "必要スクワット回数",
     "soundDefault": "デフォルト",
     "volume": "音量",
     "soundTypes": {
@@ -142,6 +146,22 @@
       "title": "スマホを振ろう",
       "progress": "{{current}} / {{target}} 回",
       "success": "シェイク完了！"
+    },
+    "memory": {
+      "title": "神経衰弱",
+      "moves": "手数: {{count}}",
+      "pairs": "{{current}} / {{total}} ペア"
+    },
+    "typing": {
+      "title": "タイピングチャレンジ",
+      "instruction": "下のテキストを正確に入力してください",
+      "placeholder": "入力を開始...",
+      "progress": "{{current}} / {{target}} 文字"
+    },
+    "squats": {
+      "title": "スクワット",
+      "instruction": "スマホを持ってスクワットしましょう",
+      "progress": "{{current}} / {{target}} 回"
     },
     "completed": "ミッション完了！",
     "alarmStopped": "アラームを停止しました"

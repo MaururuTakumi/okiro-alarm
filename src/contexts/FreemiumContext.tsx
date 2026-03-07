@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MissionType } from '../utils/types';
 
 const STORAGE_KEY = '@is_pro';
-const FREE_MISSIONS: MissionType[] = ['none', 'math'];
+const FREE_MISSIONS: MissionType[] = ['none', 'math', 'memory'];
 
 interface FreemiumContextValue {
   isPro: boolean;

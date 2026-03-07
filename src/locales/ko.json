@@ -1,4 +1,50 @@
 {
+  "onboarding": {
+    "page1": {
+      "title": "알람 하나,\n변명 제로.",
+      "subtitle": "알람 5개를 맞추는 건 이제 그만. Okiro는 미션으로 확실하게 깨워줍니다."
+    },
+    "page2": {
+      "title": "당신의 뇌에\n도전을",
+      "subtitle": "수학 문제, 걷기, 흔들기 — 확실하게 깨워주는 미션을 선택하세요. 수면 과학 기반.",
+      "stat1Label": "기상\n성공률",
+      "stat1Value": "95%",
+      "stat2Label": "스누즈\n감소",
+      "stat2Value": "80%"
+    },
+    "page3": {
+      "title": "일본에서 만든,\n일찍 일어나는 사람을 위한.",
+      "subtitle": "Okiro(起きろ)는 일본어로 '일어나!'라는 뜻. 심플하고 파워풀한 알람.",
+      "cta": "시작하기"
+    },
+    "next": "다음",
+    "skip": "건너뛰기"
+  },
+  "setup": {
+    "step1": {
+      "title": "기상 시간 설정",
+      "subtitle": "몇 시에 일어나고 싶으세요?"
+    },
+    "step2": {
+      "title": "미션 선택",
+      "subtitle": "알람을 끄기 위한 도전을 선택하세요"
+    },
+    "step3": {
+      "title": "알림 허용",
+      "subtitle": "알람을 울리려면 권한이 필요합니다",
+      "allowButton": "알림 허용",
+      "allowed": "알림이 활성화되었습니다",
+      "description": "알람과 알림 권한으로 화면 잠금 시에도 울릴 수 있습니다"
+    },
+    "step4": {
+      "title": "모든 준비 완료!",
+      "subtitle": "첫 번째 알람이 설정되었습니다. 아침을 정복할 준비가 되었습니다.",
+      "finishButton": "Okiro 시작하기"
+    },
+    "next": "다음",
+    "back": "뒤로",
+    "stepOf": "{{current}}/{{total}}"
+  },
   "common": {
     "save": "저장",
     "cancel": "취소",
@@ -12,7 +58,10 @@
   "home": {
     "title": "알람",
     "noAlarms": "설정된 알람이 없습니다",
-    "addAlarm": "알람 추가"
+    "addAlarm": "알람 추가",
+    "addHint": "+를 탭하여 첫 번째 알람을 만드세요",
+    "nextAlarm": "다음 알람",
+    "remaining": "후"
   },
   "alarmSet": {
     "title": "알람 설정",
@@ -38,7 +87,10 @@
       "barcode": "바코드 스캔",
       "photo": "사진 촬영",
       "steps": "걸음 수",
-      "shake": "흔들기"
+      "shake": "흔들기",
+      "memory": "기억력 게임",
+      "typing": "타이핑 챌린지",
+      "squats": "스쿼트"
     },
     "difficulty": "난이도",
     "difficultyLevels": {
@@ -48,6 +100,7 @@
     },
     "stepsCount": "필요 걸음 수",
     "shakeCount": "필요 흔들기 횟수",
+    "squatsCount": "필요 스쿼트 횟수",
     "soundDefault": "기본",
     "volume": "볼륨",
     "soundTypes": {
@@ -94,6 +147,22 @@
       "progress": "{{current}} / {{target}} 회",
       "success": "흔들기 완료!"
     },
+    "memory": {
+      "title": "기억력 게임",
+      "moves": "이동: {{count}}",
+      "pairs": "{{current}} / {{total}} 쌍"
+    },
+    "typing": {
+      "title": "타이핑 챌린지",
+      "instruction": "아래 텍스트를 정확히 입력하세요",
+      "placeholder": "입력 시작...",
+      "progress": "{{current}} / {{target}} 글자"
+    },
+    "squats": {
+      "title": "스쿼트 하기",
+      "instruction": "핸드폰을 들고 스쿼트를 하세요",
+      "progress": "{{current}} / {{target}} 회"
+    },
     "completed": "미션 완료!",
     "alarmStopped": "알람이 꺼졌습니다"
   },
@@ -113,7 +182,13 @@
     },
     "about": "정보",
     "version": "버전",
-    "subscription": "구독"
+    "subscription": "구독",
+    "pro": "Okiro Pro",
+    "proDesc": "모든 미션과 기능 잠금 해제",
+    "darkMode": "다크 모드",
+    "notifications": "알림",
+    "helpFeedback": "도움말 및 피드백",
+    "rateApp": "Okiro 평가하기"
   },
   "freemium": {
     "free": "무료",
@@ -123,7 +198,29 @@
     "upgradeButton": "업그레이드",
     "proOnly": "Pro 전용",
     "currentPlan": "현재 플랜",
-    "restorePurchase": "구매 복원"
+    "restorePurchase": "구매 복원",
+    "proRequired": "Pro 버전 필요"
+  },
+  "pro": {
+    "heroTitle": "Okiro의 모든\n기능을 잠금 해제",
+    "heroSubtitle": "모든 미션, 제한 없이, 더 나은 아침을.",
+    "feature1": "모든 기상 미션 잠금 해제",
+    "feature2": "무제한 알람 프리셋",
+    "feature3": "맞춤 알람 소리",
+    "feature4": "우선 지원 및 업데이트",
+    "yearly": "연간",
+    "monthly": "월간",
+    "freeTrial": "7일 무료 체험",
+    "noTrial": "무료 체험 없음",
+    "yearlyPrice": "¥300/월",
+    "yearlyTotal": "¥3,600/년",
+    "monthlyPrice": "¥600/월",
+    "monthlyTotal": "¥7,200/년",
+    "bestValue": "29% OFF",
+    "startTrial": "무료 체험 시작",
+    "disclaimer": "7일 무료, 이후 ¥3,600/년. 언제든 취소 가능.",
+    "socialProof": "5천만 사용자가\n경험하는 아침을 당신도",
+    "ranked": "97개국 1위 알람 앱"
   },
   "errors": {
     "cameraPermission": "카메라 권한이 필요합니다",
