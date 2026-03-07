@@ -12,7 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { v4 as uuidv4 } from 'uuid';
+import { generateId } from '../utils/generateId';
 import { useAlarms } from '../contexts/AlarmContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { useFreemium } from '../contexts/FreemiumContext';
@@ -98,7 +98,7 @@ export default function AlarmSetScreen() {
     if (missionType === 'squats') missionConfig.squatsTarget = squatsTarget;
 
     const alarm: Alarm = {
-      id: editingId ?? uuidv4(),
+      id: editingId ?? generateId(),
       hour,
       minute,
       enabled: existing?.enabled ?? true,

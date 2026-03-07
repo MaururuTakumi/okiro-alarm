@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { v4 as uuidv4 } from 'uuid';
+import { generateId } from '../utils/generateId';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAlarms } from '../contexts/AlarmContext';
 import { useFreemium } from '../contexts/FreemiumContext';
@@ -66,7 +66,7 @@ export default function SetupScreen() {
       if (missionType === 'shake') missionConfig.shakeTarget = 30;
 
       const alarm = {
-        id: uuidv4(),
+        id: generateId(),
         hour,
         minute,
         enabled: true,
@@ -88,10 +88,7 @@ export default function SetupScreen() {
       } catch (e) {
         console.warn('Setup alarm error:', e);
       }
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'MainTabs' }],
-      });
+      navigation.replace('Pro');
     }
   }, [step, hour, minute, missionType, addAlarm, navigation]);
 

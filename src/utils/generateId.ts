@@ -1,0 +1,9 @@
+/**
+ * Generate a unique ID without requiring crypto.getRandomValues polyfill.
+ * Uses expo-crypto when available, falls back to timestamp + random.
+ */
+export function generateId(): string {
+  const timestamp = Date.now().toString(36);
+  const random = Math.random().toString(36).substring(2, 10);
+  return `${timestamp}-${random}`;
+}

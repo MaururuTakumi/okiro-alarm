@@ -9,50 +9,60 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '../contexts/ThemeContext';
 import { useFreemium } from '../contexts/FreemiumContext';
+import { RootStackParamList } from '../utils/types';
 
+type Nav = NativeStackNavigationProp<RootStackParamList>;
 type PlanType = 'yearly' | 'monthly';
 
 export default function ProScreen() {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const c = theme.colors;
-  const navigation = useNavigation();
-  const { upgradeToPro } = useFreemium();
+  const navigation = useNavigation<Nav>();
+  const { upgradeToPro, isPro } = useFreemium();
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('yearly');
 
   const handlePurchase = async () => {
     await upgradeToPro();
-    navigation.goBack();
+    navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
+  };
+
+  const handleClose = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
+    }
   };
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
-      <TouchableOpacity style={styles.closeButton} onPress={() => navigation.goBack()}>
-        <View style={[styles.closeCircle, { backgroundColor: c.surfaceElevated }]}>
-          <Text style={[styles.closeText, { color: c.textSecondary }]}>&#x2715;</Text>
-        </View>
-      </TouchableOpacity>
-
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Header with Pro badge */}
-        <View style={styles.header}>
+      {/* Header */}
+      <View style={styles.headerBar}>
+        <View style={styles.proHeaderLeft}>
           <View style={[styles.proIcon, { backgroundColor: c.primary }]}>
             <Text style={styles.proIconText}>&#x2605;</Text>
           </View>
           <Text style={[styles.proLabel, { color: c.primary }]}>PRO</Text>
         </View>
+        <TouchableOpacity onPress={handleClose} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
+          <Text style={[styles.closeX, { color: c.textSecondary }]}>&#x2715;</Text>
+        </TouchableOpacity>
+      </View>
 
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         {/* Ranking badge */}
         <View style={styles.rankingSection}>
           <View style={styles.laurelContainer}>
             <Text style={[styles.laurelText, { color: c.textMuted }]}>&#x1F33F;</Text>
-            <View style={styles.rankCircle}>
+            <View style={styles.rankCenter}>
               <Text style={[styles.rankNumber, { color: c.text }]}>1</Text>
               <Text style={[styles.rankSubtext, { color: c.textSecondary }]}>App Store</Text>
             </View>
-            <Text style={[styles.laurelText, { color: c.textMuted }]}>&#x1F33F;</Text>
+            <Text style={[styles.laurelText, { color: c.textMuted, transform: [{ scaleX: -1 }] }]}>&#x1F33F;</Text>
           </View>
           <Text style={[styles.rankedText, { color: c.textSecondary }]}>
             {t('pro.ranked')}
@@ -63,9 +73,6 @@ export default function ProScreen() {
         <Text style={[styles.heroTitle, { color: c.text }]}>
           {t('pro.heroTitle')}
         </Text>
-        <Text style={[styles.heroSubtitle, { color: c.textSecondary }]}>
-          {t('pro.heroSubtitle')}
-        </Text>
 
         {/* Plan Cards */}
         <View style={styles.plans}>
@@ -74,7 +81,7 @@ export default function ProScreen() {
             style={[
               styles.planCard,
               {
-                backgroundColor: c.surfaceElevated,
+                backgroundColor: selectedPlan === 'yearly' ? c.primary + '10' : c.surfaceElevated,
                 borderColor: selectedPlan === 'yearly' ? c.primary : c.border,
                 borderWidth: selectedPlan === 'yearly' ? 2 : 1,
               },
@@ -82,30 +89,32 @@ export default function ProScreen() {
             onPress={() => setSelectedPlan('yearly')}
             activeOpacity={0.7}
           >
-            {selectedPlan === 'yearly' && (
-              <View style={[styles.bestValue, { backgroundColor: c.success }]}>
-                <Text style={styles.bestValueText}>{t('pro.bestValue')}</Text>
-              </View>
-            )}
-            <View style={styles.planInfo}>
+            {/* Discount badge */}
+            <View style={[styles.discountBadge, { backgroundColor: '#22C55E' }]}>
+              <Text style={styles.discountBadgeText}>{t('pro.discount')}</Text>
+            </View>
+
+            <View style={styles.planLeft}>
               <View style={[styles.planRadio, { borderColor: selectedPlan === 'yearly' ? c.primary : c.border }]}>
                 {selectedPlan === 'yearly' && <View style={[styles.planRadioInner, { backgroundColor: c.primary }]} />}
               </View>
               <View>
                 <View style={styles.planNameRow}>
                   <Text style={[styles.planName, { color: c.text }]}>{t('pro.yearly')}</Text>
-                  <View style={[styles.trialBadge, { backgroundColor: c.success + '20' }]}>
-                    <Text style={[styles.trialBadgeText, { color: c.success }]}>{t('pro.freeTrial')}</Text>
+                  <View style={[styles.trialBadge, { backgroundColor: '#22C55E20' }]}>
+                    <Text style={[styles.trialBadgeText, { color: '#22C55E' }]}>{t('pro.freeTrial')}</Text>
                   </View>
                 </View>
               </View>
             </View>
-            <View style={styles.planPricing}>
-              <Text style={[styles.planPrice, { color: c.text }]}>{t('pro.yearlyPrice')}</Text>
-              <Text style={[styles.planTotal, { color: c.textSecondary }]}>
-                {t('pro.monthlyTotal')}
-              </Text>
-              <Text style={[styles.planPeriod, { color: c.textSecondary }]}>{t('pro.yearlyTotal')}</Text>
+
+            <View style={styles.planRight}>
+              <Text style={[styles.planPrice, { color: c.text }]}>{t('pro.yearlyMonthPrice')}</Text>
+              <View style={styles.planTotalRow}>
+                <Text style={[styles.planOriginal, { color: c.textMuted }]}>{t('pro.yearlyOriginal')}</Text>
+                <Text style={styles.planTotalSpace}> </Text>
+                <Text style={[styles.planTotal, { color: c.textSecondary }]}>{t('pro.yearlyTotal')}</Text>
+              </View>
             </View>
           </TouchableOpacity>
 
@@ -114,7 +123,7 @@ export default function ProScreen() {
             style={[
               styles.planCard,
               {
-                backgroundColor: c.surfaceElevated,
+                backgroundColor: selectedPlan === 'monthly' ? c.primary + '10' : c.surfaceElevated,
                 borderColor: selectedPlan === 'monthly' ? c.primary : c.border,
                 borderWidth: selectedPlan === 'monthly' ? 2 : 1,
               },
@@ -122,7 +131,7 @@ export default function ProScreen() {
             onPress={() => setSelectedPlan('monthly')}
             activeOpacity={0.7}
           >
-            <View style={styles.planInfo}>
+            <View style={styles.planLeft}>
               <View style={[styles.planRadio, { borderColor: selectedPlan === 'monthly' ? c.primary : c.border }]}>
                 {selectedPlan === 'monthly' && <View style={[styles.planRadioInner, { backgroundColor: c.primary }]} />}
               </View>
@@ -131,15 +140,15 @@ export default function ProScreen() {
                 <Text style={[styles.planNote, { color: c.textSecondary }]}>{t('pro.noTrial')}</Text>
               </View>
             </View>
-            <View style={styles.planPricing}>
+            <View style={styles.planRight}>
               <Text style={[styles.planPrice, { color: c.text }]}>{t('pro.monthlyPrice')}</Text>
-              <Text style={[styles.planPeriod, { color: c.textSecondary }]}>{t('pro.monthlyTotal')}</Text>
+              <Text style={[styles.planTotal, { color: c.textSecondary }]}>{t('pro.monthlyTotal')}</Text>
             </View>
           </TouchableOpacity>
         </View>
 
         {/* Social Proof */}
-        <Text style={[styles.socialProof, { color: c.text }]}>
+        <Text style={[styles.socialProof, { color: c.primary }]}>
           {t('pro.socialProof')}
         </Text>
 
@@ -163,10 +172,12 @@ export default function ProScreen() {
           onPress={handlePurchase}
           activeOpacity={0.8}
         >
-          <Text style={styles.purchaseButtonText}>{t('pro.startTrial')}</Text>
+          <Text style={styles.purchaseButtonText}>
+            {selectedPlan === 'yearly' ? t('pro.startTrial') : t('pro.subscribe')}
+          </Text>
         </TouchableOpacity>
         <Text style={[styles.disclaimer, { color: c.textMuted }]}>
-          {t('pro.disclaimer')}
+          {selectedPlan === 'yearly' ? t('pro.disclaimerYearly') : t('pro.disclaimerMonthly')}
         </Text>
       </View>
     </View>
@@ -177,33 +188,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  closeButton: {
-    position: 'absolute',
-    top: Platform.OS === 'web' ? 16 : 56,
-    right: 20,
-    zIndex: 10,
-  },
-  closeCircle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    justifyContent: 'center',
+  headerBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: Platform.OS === 'web' ? 16 : 56,
+    paddingBottom: 8,
   },
-  closeText: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  content: {
-    padding: 24,
-    paddingTop: Platform.OS === 'web' ? 40 : 80,
-    paddingBottom: 160,
-  },
-  header: {
+  proHeaderLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    marginBottom: 28,
   },
   proIcon: {
     width: 32,
@@ -221,9 +217,18 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     letterSpacing: 2,
   },
+  closeX: {
+    fontSize: 20,
+    fontWeight: '400',
+  },
+  content: {
+    paddingHorizontal: 24,
+    paddingTop: 12,
+    paddingBottom: 160,
+  },
   rankingSection: {
     alignItems: 'center',
-    marginBottom: 28,
+    marginBottom: 24,
   },
   laurelContainer: {
     flexDirection: 'row',
@@ -234,7 +239,7 @@ const styles = StyleSheet.create({
   laurelText: {
     fontSize: 32,
   },
-  rankCircle: {
+  rankCenter: {
     alignItems: 'center',
   },
   rankNumber: {
@@ -252,18 +257,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   heroTitle: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: '800',
     lineHeight: 34,
     textAlign: 'center',
-    marginBottom: 10,
-    letterSpacing: -0.5,
-  },
-  heroSubtitle: {
-    fontSize: 15,
-    lineHeight: 22,
-    textAlign: 'center',
     marginBottom: 28,
+    letterSpacing: -0.3,
   },
   plans: {
     gap: 12,
@@ -277,8 +276,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
     overflow: 'hidden',
+    minHeight: 72,
   },
-  bestValue: {
+  discountBadge: {
     position: 'absolute',
     top: 0,
     right: 0,
@@ -286,28 +286,29 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderBottomLeftRadius: 8,
   },
-  bestValueText: {
+  discountBadgeText: {
     color: '#FFF',
     fontSize: 10,
     fontWeight: '700',
   },
-  planInfo: {
+  planLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+    flex: 1,
   },
   planRadio: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
   planRadioInner: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
   },
   planNameRow: {
     flexDirection: 'row',
@@ -320,7 +321,7 @@ const styles = StyleSheet.create({
   },
   trialBadge: {
     paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingVertical: 3,
     borderRadius: 6,
   },
   trialBadgeText: {
@@ -331,21 +332,27 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 2,
   },
-  planPricing: {
+  planRight: {
     alignItems: 'flex-end',
   },
   planPrice: {
     fontSize: 18,
     fontWeight: '700',
   },
-  planTotal: {
-    fontSize: 11,
+  planTotalRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: 2,
+  },
+  planOriginal: {
+    fontSize: 11,
     textDecorationLine: 'line-through',
   },
-  planPeriod: {
+  planTotalSpace: {
+    width: 4,
+  },
+  planTotal: {
     fontSize: 12,
-    marginTop: 2,
   },
   socialProof: {
     fontSize: 16,
