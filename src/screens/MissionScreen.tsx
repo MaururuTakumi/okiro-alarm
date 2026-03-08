@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useTheme } from '../contexts/ThemeContext';
 import { RootStackParamList } from '../utils/types';
-import { cancelAlarmNotification } from '../utils/notifications';
+import { cancelAlarmNotification, scheduleSnoozeNotification } from '../utils/notifications';
+import { useAlarms } from '../contexts/AlarmContext';
 import { paymentService } from '../services/PaymentService';
 import { MathMission, BarcodeMission, PhotoMission, StepsMission, ShakeMission, MemoryMission, TypingMission, SquatsMission } from '../components/missions';
 
@@ -17,6 +18,7 @@ export default function MissionScreen() {
   const navigation = useNavigation();
   const route = useRoute<Route>();
   const { missionType, missionConfig, preventSnooze, payToSnooze, snoozeCost } = route.params;
+  const { getAlarm } = useAlarms();
   const [completed, setCompleted] = useState(false);
   const [snoozed, setSnoozed] = useState(false);
   const [showPayConfirm, setShowPayConfirm] = useState(false);
@@ -41,14 +43,17 @@ export default function MissionScreen() {
     }
   }, [payToSnooze]);
 
-  const performSnooze = useCallback(() => {
+  const performSnooze = useCallback(async () => {
     setSnoozed(true);
-    cancelAlarmNotification(route.params.alarmId);
-    // TODO: Schedule a new notification 5 minutes from now
+    await cancelAlarmNotification(route.params.alarmId);
+    const alarm = getAlarm(route.params.alarmId);
+    if (alarm) {
+      await scheduleSnoozeNotification(alarm);
+    }
     setTimeout(() => {
       navigation.goBack();
     }, 1500);
-  }, [navigation, route.params.alarmId]);
+  }, [navigation, route.params.alarmId, getAlarm]);
 
   const handlePayAndSnooze = useCallback(async () => {
     setCharging(true);

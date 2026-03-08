@@ -94,6 +94,30 @@ export async function cancelAlarmNotification(alarmId: string) {
   }
 }
 
+export async function scheduleSnoozeNotification(alarm: Alarm) {
+  if (Platform.OS === 'web') return;
+
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: alarm.label || 'Alarm',
+      body: 'Time to wake up!',
+      data: {
+        alarmId: alarm.id,
+        missionType: alarm.missionType,
+        missionConfig: alarm.missionConfig,
+        preventSnooze: alarm.preventSnooze,
+        payToSnooze: alarm.payToSnooze,
+        snoozeCost: alarm.snoozeCost,
+      },
+      sound: true,
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+      seconds: 5 * 60,
+    },
+  });
+}
+
 export async function scheduleRepeatNotification(alarm: Alarm, repeatCount: number) {
   if (Platform.OS === 'web') return;
   if (!alarm.repeatAlarm) return;

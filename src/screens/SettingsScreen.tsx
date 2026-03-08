@@ -172,7 +172,7 @@ export default function SettingsScreen() {
               Platform.OS === 'ios'
                 ? 'https://apps.apple.com/app/okiro/id000000000'
                 : Platform.OS === 'android'
-                ? 'https://play.google.com/store/apps/details?id=com.okiro'
+                ? 'https://play.google.com/store/apps/details?id=com.taku2914.okiro'
                 : '';
             if (storeUrl) Linking.openURL(storeUrl);
           }}
