@@ -202,7 +202,15 @@
     "darkMode": "ダークモード",
     "notifications": "通知",
     "helpFeedback": "ヘルプ・フィードバック",
-    "rateApp": "Okiroを評価"
+    "rateApp": "Okiroを評価",
+    "payment": "Pay to Snooze 決済",
+    "paymentMethod": "お支払い方法",
+    "addCard": "カードを追加",
+    "totalSnoozeCharged": "スヌーズ課金の合計",
+    "paymentSaved": "カードを登録しました",
+    "paymentSavedDesc": "Pay to Snoozeの決済に使用されます",
+    "removePayment": "カードを削除",
+    "removePaymentDesc": "登録済みのカードを削除しますか？"
   },
   "freemium": {
     "free": "無料",

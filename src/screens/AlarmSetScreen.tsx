@@ -528,31 +528,26 @@ export default function AlarmSetScreen() {
             <Text style={[styles.configLabel, { color: c.textSecondary }]}>
               {t('alarmSet.snoozeCost')}
             </Text>
-            <View style={styles.snoozeCostRow}>
-              {[100, 200, 500].map((cost) => {
-                const active = snoozeCost === cost;
-                return (
-                  <TouchableOpacity
-                    key={cost}
-                    style={[
-                      styles.snoozeCostChip,
-                      { backgroundColor: c.surfaceElevated, borderColor: c.border },
-                      active && { backgroundColor: c.primary, borderColor: c.primary },
-                    ]}
-                    onPress={() => setSnoozeCost(cost)}
-                    activeOpacity={0.7}
-                  >
-                    <Text
-                      style={[
-                        styles.snoozeCostText,
-                        { color: active ? '#FFFFFF' : c.text },
-                      ]}
-                    >
-                      {t('alarmSet.snoozeCostValue', { amount: cost })}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
+            <View style={styles.stepperRow}>
+              <TouchableOpacity
+                style={[styles.stepperBtn, { backgroundColor: c.surfaceElevated, borderColor: c.border }]}
+                onPress={() => setSnoozeCost(Math.max(100, snoozeCost - 100))}
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.stepperBtnText, { color: c.primary }]}>-</Text>
+              </TouchableOpacity>
+              <View style={[styles.stepperValueContainer, { backgroundColor: c.surfaceElevated, minWidth: 100 }]}>
+                <Text style={[styles.stepperValue, { color: c.primary }]}>
+                  {t('alarmSet.snoozeCostValue', { amount: snoozeCost })}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={[styles.stepperBtn, { backgroundColor: c.surfaceElevated, borderColor: c.border }]}
+                onPress={() => setSnoozeCost(Math.min(10000, snoozeCost + 100))}
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.stepperBtnText, { color: c.primary }]}>+</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -815,22 +810,6 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'rgba(255,255,255,0.08)',
   },
-  snoozeCostRow: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  snoozeCostChip: {
-    flex: 1,
-    paddingVertical: 10,
-    borderRadius: 10,
-    borderWidth: 1,
-    alignItems: 'center',
-  },
-  snoozeCostText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-
   // Save Button
   saveButton: {
     borderRadius: 14,

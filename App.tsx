@@ -8,10 +8,14 @@ import { useTranslation } from 'react-i18next';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { StripeProvider } from '@stripe/stripe-react-native';
 import './src/locales/i18n';
 import { AlarmProvider } from './src/contexts/AlarmContext';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import { FreemiumProvider } from './src/contexts/FreemiumContext';
+
+// TODO: Replace with your Stripe publishable key
+const STRIPE_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_STRIPE_KEY || 'pk_test_placeholder';
 import HomeScreen from './src/screens/HomeScreen';
 import AlarmSetScreen from './src/screens/AlarmSetScreen';
 import MissionScreen from './src/screens/MissionScreen';
@@ -179,12 +183,14 @@ export default function App() {
   }, []);
 
   return (
-    <ThemeProvider>
-      <FreemiumProvider>
-        <AlarmProvider>
-          <AppNavigator />
-        </AlarmProvider>
-      </FreemiumProvider>
-    </ThemeProvider>
+    <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+      <ThemeProvider>
+        <FreemiumProvider>
+          <AlarmProvider>
+            <AppNavigator />
+          </AlarmProvider>
+        </FreemiumProvider>
+      </ThemeProvider>
+    </StripeProvider>
   );
 }

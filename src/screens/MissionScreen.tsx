@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, Vibration, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, Vibration, TouchableOpacity, Platform, ActivityIndicator } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useTheme } from '../contexts/ThemeContext';
 import { RootStackParamList } from '../utils/types';
 import { cancelAlarmNotification } from '../utils/notifications';
+import { paymentService } from '../services/PaymentService';
 import { MathMission, BarcodeMission, PhotoMission, StepsMission, ShakeMission, MemoryMission, TypingMission, SquatsMission } from '../components/missions';
 
 type Route = RouteProp<RootStackParamList, 'Mission'>;
@@ -19,6 +20,9 @@ export default function MissionScreen() {
   const [completed, setCompleted] = useState(false);
   const [snoozed, setSnoozed] = useState(false);
   const [showPayConfirm, setShowPayConfirm] = useState(false);
+  const [charging, setCharging] = useState(false);
+
+  const costAmount = snoozeCost ?? 100;
 
   const handleComplete = useCallback(() => {
     setCompleted(true);
@@ -46,13 +50,20 @@ export default function MissionScreen() {
     }, 1500);
   }, [navigation, route.params.alarmId]);
 
-  const handlePayAndSnooze = useCallback(() => {
-    // TODO: Process actual payment via IAP/Stripe
-    setShowPayConfirm(false);
-    performSnooze();
-  }, [performSnooze]);
+  const handlePayAndSnooze = useCallback(async () => {
+    setCharging(true);
+    const success = await paymentService.chargeSnooze(
+      costAmount,
+      route.params.alarmId,
+    );
+    setCharging(false);
 
-  const costAmount = snoozeCost ?? 100;
+    if (success) {
+      setShowPayConfirm(false);
+      performSnooze();
+    }
+    // If charge fails, stay on confirm screen so user can retry or go back
+  }, [performSnooze, costAmount, route.params.alarmId]);
 
   if (snoozed) {
     return (
@@ -94,13 +105,18 @@ export default function MissionScreen() {
             </Text>
 
             <TouchableOpacity
-              style={[styles.payButton, { backgroundColor: c.primary }]}
+              style={[styles.payButton, { backgroundColor: c.primary, opacity: charging ? 0.7 : 1 }]}
               onPress={handlePayAndSnooze}
               activeOpacity={0.8}
+              disabled={charging}
             >
-              <Text style={styles.payButtonText}>
-                {t('mission.payAndSnooze', { amount: costAmount })}
-              </Text>
+              {charging ? (
+                <ActivityIndicator color="#FFFFFF" />
+              ) : (
+                <Text style={styles.payButtonText}>
+                  {t('mission.payAndSnooze', { amount: costAmount })}
+                </Text>
+              )}
             </TouchableOpacity>
 
             <TouchableOpacity

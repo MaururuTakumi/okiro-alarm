@@ -202,7 +202,15 @@
     "darkMode": "다크 모드",
     "notifications": "알림",
     "helpFeedback": "도움말 및 피드백",
-    "rateApp": "Okiro 평가하기"
+    "rateApp": "Okiro 평가하기",
+    "payment": "Pay to Snooze 결제",
+    "paymentMethod": "결제 수단",
+    "addCard": "카드 추가",
+    "totalSnoozeCharged": "스누즈 결제 합계",
+    "paymentSaved": "카드가 저장되었습니다",
+    "paymentSavedDesc": "Pay to Snooze 결제에 사용됩니다",
+    "removePayment": "카드 삭제",
+    "removePaymentDesc": "등록된 결제 수단을 삭제하시겠습니까?"
   },
   "freemium": {
     "free": "무료",

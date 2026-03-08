@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Switch,
   Platform,
   Linking,
+  Alert,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
@@ -15,6 +16,7 @@ import { useFreemium } from '../contexts/FreemiumContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/types';
+import { paymentService, PaymentMethod } from '../services/PaymentService';
 
 const LANGUAGES = ['en', 'ja', 'zh', 'ko'] as const;
 const APP_VERSION = '1.0.0';
@@ -28,8 +30,50 @@ export default function SettingsScreen() {
   const navigation = useNavigation<NavigationProp>();
   const c = theme.colors;
   const isDark = theme.mode === 'dark';
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
+  const [totalCharged, setTotalCharged] = useState(0);
 
   const topPadding = Platform.OS === 'web' ? 24 : Platform.OS === 'ios' ? 60 : 48;
+
+  useEffect(() => {
+    paymentService.getPaymentMethod().then(setPaymentMethod);
+    paymentService.getTotalCharged().then(setTotalCharged);
+  }, []);
+
+  const handleSetupPayment = useCallback(async () => {
+    // TODO: Open Stripe card setup sheet
+    // For now, simulate saving a test card
+    if (__DEV__) {
+      const testMethod: PaymentMethod = {
+        id: 'pm_test_' + Date.now(),
+        last4: '4242',
+        brand: 'Visa',
+        expiryMonth: 12,
+        expiryYear: 2028,
+      };
+      await paymentService.savePaymentMethod(testMethod);
+      setPaymentMethod(testMethod);
+      Alert.alert(t('settings.paymentSaved'), t('settings.paymentSavedDesc'));
+    }
+  }, [t]);
+
+  const handleRemovePayment = useCallback(async () => {
+    Alert.alert(
+      t('settings.removePayment'),
+      t('settings.removePaymentDesc'),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('common.delete'),
+          style: 'destructive',
+          onPress: async () => {
+            await paymentService.removePaymentMethod();
+            setPaymentMethod(null);
+          },
+        },
+      ],
+    );
+  }, [t]);
 
   return (
     <ScrollView
@@ -76,6 +120,48 @@ export default function SettingsScreen() {
           </Text>
           <Text style={[styles.rowValue, { color: isPro ? c.success : c.textMuted }]}>
             {isPro ? 'Active' : 'Free'}
+          </Text>
+        </View>
+      </View>
+
+      {/* Payment Section (Pay to Snooze) */}
+      <View style={[styles.sectionCard, { backgroundColor: c.surface }]}>
+        <Text style={[styles.sectionLabel, { color: c.textSecondary }]}>
+          {t('settings.payment')}
+        </Text>
+
+        {/* Payment Method */}
+        <TouchableOpacity
+          style={[styles.row, { borderBottomColor: c.border }]}
+          onPress={paymentMethod ? handleRemovePayment : handleSetupPayment}
+          activeOpacity={0.7}
+        >
+          <Text style={[styles.rowText, { color: c.text }]}>
+            {t('settings.paymentMethod')}
+          </Text>
+          {paymentMethod ? (
+            <View style={styles.cardInfo}>
+              <Text style={[styles.cardBrand, { color: c.text }]}>
+                {paymentMethod.brand}
+              </Text>
+              <Text style={[styles.cardLast4, { color: c.textSecondary }]}>
+                **** {paymentMethod.last4}
+              </Text>
+            </View>
+          ) : (
+            <Text style={[styles.rowValue, { color: c.primary }]}>
+              {t('settings.addCard')}
+            </Text>
+          )}
+        </TouchableOpacity>
+
+        {/* Total Charged */}
+        <View style={[styles.row, styles.rowNoBorder]}>
+          <Text style={[styles.rowText, { color: c.text }]}>
+            {t('settings.totalSnoozeCharged')}
+          </Text>
+          <Text style={[styles.rowValue, { color: totalCharged > 0 ? c.primary : c.textMuted }]}>
+            {t('alarmSet.snoozeCostValue', { amount: totalCharged })}
           </Text>
         </View>
       </View>
@@ -292,6 +378,20 @@ const styles = StyleSheet.create({
   checkmark: {
     fontSize: 18,
     fontWeight: '700',
+  },
+
+  // Payment
+  cardInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  cardBrand: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  cardLast4: {
+    fontSize: 14,
   },
 
   bottomSpacer: {

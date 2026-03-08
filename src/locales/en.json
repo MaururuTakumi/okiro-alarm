@@ -202,7 +202,15 @@
     "darkMode": "Dark Mode",
     "notifications": "Notifications",
     "helpFeedback": "Help & Feedback",
-    "rateApp": "Rate Okiro"
+    "rateApp": "Rate Okiro",
+    "payment": "Pay to Snooze Payment",
+    "paymentMethod": "Payment Method",
+    "addCard": "Add Card",
+    "totalSnoozeCharged": "Total Snooze Charges",
+    "paymentSaved": "Card Saved",
+    "paymentSavedDesc": "This card will be used for Pay to Snooze charges",
+    "removePayment": "Remove Card",
+    "removePaymentDesc": "Remove the registered payment method?"
   },
   "freemium": {
     "free": "Free",

@@ -202,7 +202,15 @@
     "darkMode": "深色模式",
     "notifications": "通知",
     "helpFeedback": "帮助与反馈",
-    "rateApp": "给Okiro评分"
+    "rateApp": "给Okiro评分",
+    "payment": "Pay to Snooze 支付",
+    "paymentMethod": "支付方式",
+    "addCard": "添加银行卡",
+    "totalSnoozeCharged": "贪睡总扣费",
+    "paymentSaved": "银行卡已保存",
+    "paymentSavedDesc": "此卡将用于Pay to Snooze扣费",
+    "removePayment": "删除银行卡",
+    "removePaymentDesc": "是否删除已注册的支付方式？"
   },
   "freemium": {
     "free": "免费",
