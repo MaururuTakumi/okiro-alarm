@@ -115,7 +115,11 @@
     },
     "volumeEscalation": "音量を徐々に上げる",
     "volumeEscalationDesc": "アラーム音量が徐々に大きくなります",
-    "soundPreview": "タップしてプレビュー"
+    "soundPreview": "タップしてプレビュー",
+    "payToSnooze": "Pay to Snooze",
+    "payToSnoozeDesc": "スヌーズするたびに課金されます。二度寝防止の最終兵器。",
+    "snoozeCost": "スヌーズ1回の料金",
+    "snoozeCostValue": "¥{{amount}}"
   },
   "mission": {
     "title": "ミッションを完了してアラームを止めましょう",
@@ -164,7 +168,17 @@
       "progress": "{{current}} / {{target}} 回"
     },
     "completed": "ミッション完了！",
-    "alarmStopped": "アラームを停止しました"
+    "alarmStopped": "アラームを停止しました",
+    "snooze": "スヌーズ",
+    "snooze5min": "5分後に再アラーム",
+    "snoozeFor": "¥{{amount}}でスヌーズ",
+    "snoozed": "スヌーズしました",
+    "snoozedSub": "5分後に再度アラームが鳴ります",
+    "paidSnooze": "¥{{amount}}が課金されました",
+    "paySnoozeTitle": "スヌーズしますか？",
+    "paySnoozeDesc": "二度寝にはお金がかかります。\nミッションをクリアすれば無料です。",
+    "payAndSnooze": "¥{{amount}}を支払ってスヌーズ",
+    "doMissionInstead": "ミッションをクリアする"
   },
   "settings": {
     "title": "設定",

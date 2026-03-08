@@ -16,6 +16,8 @@ export interface Alarm {
   sound: AlarmSound;
   volumeEscalation?: boolean;
   preventSnooze: boolean;
+  payToSnooze: boolean;
+  snoozeCost: number;
   repeatAlarm: boolean;
   repeatInterval: number;
   maxRepeats: number;
@@ -41,6 +43,8 @@ export type RootStackParamList = {
     missionType: MissionType;
     missionConfig: MissionConfig;
     preventSnooze?: boolean;
+    payToSnooze?: boolean;
+    snoozeCost?: number;
     repeatAlarm?: boolean;
     repeatInterval?: number;
     maxRepeats?: number;

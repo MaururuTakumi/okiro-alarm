@@ -115,7 +115,11 @@
     },
     "volumeEscalation": "逐渐增大音量",
     "volumeEscalationDesc": "闹钟音量将逐渐增大",
-    "soundPreview": "点击预览"
+    "soundPreview": "点击预览",
+    "payToSnooze": "Pay to Snooze",
+    "payToSnoozeDesc": "每次贪睡都会收费。防止赖床的终极武器。",
+    "snoozeCost": "每次贪睡费用",
+    "snoozeCostValue": "¥{{amount}}"
   },
   "mission": {
     "title": "完成任务以关闭闹钟",
@@ -164,7 +168,17 @@
       "progress": "{{current}} / {{target}} 个"
     },
     "completed": "任务完成！",
-    "alarmStopped": "闹钟已关闭"
+    "alarmStopped": "闹钟已关闭",
+    "snooze": "贪睡",
+    "snooze5min": "5分钟后再次响铃",
+    "snoozeFor": "¥{{amount}}贪睡",
+    "snoozed": "已贪睡",
+    "snoozedSub": "5分钟后闹钟将再次响起",
+    "paidSnooze": "已扣费¥{{amount}}",
+    "paySnoozeTitle": "要贪睡吗？",
+    "paySnoozeDesc": "赖床是要花钱的。\n完成任务可以免费关闭。",
+    "payAndSnooze": "支付¥{{amount}}贪睡",
+    "doMissionInstead": "完成任务"
   },
   "settings": {
     "title": "设置",

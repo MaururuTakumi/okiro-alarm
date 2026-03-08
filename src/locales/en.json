@@ -115,7 +115,11 @@
     },
     "volumeEscalation": "Gradually increase volume",
     "volumeEscalationDesc": "Alarm volume will gradually increase",
-    "soundPreview": "Tap to preview"
+    "soundPreview": "Tap to preview",
+    "payToSnooze": "Pay to Snooze",
+    "payToSnoozeDesc": "Get charged every time you snooze. The ultimate weapon against oversleeping.",
+    "snoozeCost": "Cost per snooze",
+    "snoozeCostValue": "¥{{amount}}"
   },
   "mission": {
     "title": "Complete Mission to Stop Alarm",
@@ -164,7 +168,17 @@
       "progress": "{{current}} / {{target}} squats"
     },
     "completed": "Mission Complete!",
-    "alarmStopped": "Alarm stopped"
+    "alarmStopped": "Alarm stopped",
+    "snooze": "Snooze",
+    "snooze5min": "Alarm again in 5 min",
+    "snoozeFor": "¥{{amount}} to Snooze",
+    "snoozed": "Snoozed",
+    "snoozedSub": "Alarm will ring again in 5 minutes",
+    "paidSnooze": "¥{{amount}} charged",
+    "paySnoozeTitle": "Want to snooze?",
+    "paySnoozeDesc": "Sleeping in costs money.\nComplete the mission to stop for free.",
+    "payAndSnooze": "Pay ¥{{amount}} to Snooze",
+    "doMissionInstead": "Do the mission instead"
   },
   "settings": {
     "title": "Settings",

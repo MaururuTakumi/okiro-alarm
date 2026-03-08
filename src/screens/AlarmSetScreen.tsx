@@ -65,6 +65,8 @@ export default function AlarmSetScreen() {
   const [sound, setSound] = useState<AlarmSound>((existing?.sound as AlarmSound) ?? 'default');
   const [volumeEscalation, setVolumeEscalation] = useState(existing?.volumeEscalation ?? false);
   const [soundExpanded, setSoundExpanded] = useState(false);
+  const [payToSnooze, setPayToSnooze] = useState(existing?.payToSnooze ?? false);
+  const [snoozeCost, setSnoozeCost] = useState(existing?.snoozeCost ?? 100);
 
   const hourItems = useMemo(
     () =>
@@ -109,6 +111,8 @@ export default function AlarmSetScreen() {
       sound,
       volumeEscalation,
       preventSnooze: existing?.preventSnooze ?? false,
+      payToSnooze,
+      snoozeCost,
       repeatAlarm: existing?.repeatAlarm ?? false,
       repeatInterval: existing?.repeatInterval ?? 3,
       maxRepeats: existing?.maxRepeats ?? 3,
@@ -497,6 +501,63 @@ export default function AlarmSetScreen() {
         )}
       </View>
 
+      {/* Pay to Snooze Section */}
+      <View style={[styles.card, { backgroundColor: c.surface }]}>
+        <View style={styles.paySnoozeHeader}>
+          <View style={styles.paySnoozeHeaderLeft}>
+            <Text style={[styles.cardTitle, { color: c.textSecondary, marginBottom: 0 }]}>
+              {t('alarmSet.payToSnooze')}
+            </Text>
+            <View style={[styles.paySnoozeNewBadge, { backgroundColor: c.primary }]}>
+              <Text style={styles.paySnoozeNewBadgeText}>NEW</Text>
+            </View>
+          </View>
+          <Switch
+            value={payToSnooze}
+            onValueChange={setPayToSnooze}
+            trackColor={{ false: c.border, true: c.primary + '80' }}
+            thumbColor={payToSnooze ? c.primary : c.textMuted}
+          />
+        </View>
+        <Text style={[styles.paySnoozeDesc, { color: c.textMuted }]}>
+          {t('alarmSet.payToSnoozeDesc')}
+        </Text>
+
+        {payToSnooze && (
+          <View style={styles.paySnoozeConfig}>
+            <Text style={[styles.configLabel, { color: c.textSecondary }]}>
+              {t('alarmSet.snoozeCost')}
+            </Text>
+            <View style={styles.snoozeCostRow}>
+              {[100, 200, 500].map((cost) => {
+                const active = snoozeCost === cost;
+                return (
+                  <TouchableOpacity
+                    key={cost}
+                    style={[
+                      styles.snoozeCostChip,
+                      { backgroundColor: c.surfaceElevated, borderColor: c.border },
+                      active && { backgroundColor: c.primary, borderColor: c.primary },
+                    ]}
+                    onPress={() => setSnoozeCost(cost)}
+                    activeOpacity={0.7}
+                  >
+                    <Text
+                      style={[
+                        styles.snoozeCostText,
+                        { color: active ? '#FFFFFF' : c.text },
+                      ]}
+                    >
+                      {t('alarmSet.snoozeCostValue', { amount: cost })}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        )}
+      </View>
+
       {/* Save Button */}
       <TouchableOpacity
         style={[styles.saveButton, { backgroundColor: c.primary }]}
@@ -719,6 +780,55 @@ const styles = StyleSheet.create({
   stepperValue: {
     fontSize: 20,
     fontWeight: '700',
+  },
+
+  // Pay to Snooze
+  paySnoozeHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  paySnoozeHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  paySnoozeNewBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  paySnoozeNewBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 9,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+  },
+  paySnoozeDesc: {
+    fontSize: 12,
+    marginTop: 6,
+    lineHeight: 18,
+  },
+  paySnoozeConfig: {
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(255,255,255,0.08)',
+  },
+  snoozeCostRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  snoozeCostChip: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+  snoozeCostText: {
+    fontSize: 14,
+    fontWeight: '600',
   },
 
   // Save Button

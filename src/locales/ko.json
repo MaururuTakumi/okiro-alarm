@@ -115,7 +115,11 @@
     },
     "volumeEscalation": "점진적 볼륨 증가",
     "volumeEscalationDesc": "알람 볼륨이 점점 커집니다",
-    "soundPreview": "탭하여 미리 듣기"
+    "soundPreview": "탭하여 미리 듣기",
+    "payToSnooze": "Pay to Snooze",
+    "payToSnoozeDesc": "스누즈할 때마다 요금이 부과됩니다. 늦잠 방지 최종 병기.",
+    "snoozeCost": "스누즈 1회 요금",
+    "snoozeCostValue": "₩{{amount}}"
   },
   "mission": {
     "title": "미션을 완료하여 알람을 끄세요",
@@ -164,7 +168,17 @@
       "progress": "{{current}} / {{target}} 회"
     },
     "completed": "미션 완료!",
-    "alarmStopped": "알람이 꺼졌습니다"
+    "alarmStopped": "알람이 꺼졌습니다",
+    "snooze": "스누즈",
+    "snooze5min": "5분 후 다시 알람",
+    "snoozeFor": "₩{{amount}}로 스누즈",
+    "snoozed": "스누즈됨",
+    "snoozedSub": "5분 후 다시 알람이 울립니다",
+    "paidSnooze": "₩{{amount}} 결제됨",
+    "paySnoozeTitle": "스누즈 하시겠습니까?",
+    "paySnoozeDesc": "늦잠에는 비용이 듭니다.\n미션을 완료하면 무료입니다.",
+    "payAndSnooze": "₩{{amount}} 결제하고 스누즈",
+    "doMissionInstead": "미션 완료하기"
   },
   "settings": {
     "title": "설정",

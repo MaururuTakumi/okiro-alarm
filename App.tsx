@@ -167,6 +167,8 @@ export default function App() {
           missionType: data.missionType as MissionType,
           missionConfig: (data.missionConfig as MissionConfig) || {},
           preventSnooze: data.preventSnooze as boolean | undefined,
+          payToSnooze: data.payToSnooze as boolean | undefined,
+          snoozeCost: data.snoozeCost as number | undefined,
           repeatAlarm: data.repeatAlarm as boolean | undefined,
           repeatInterval: data.repeatInterval as number | undefined,
           maxRepeats: data.maxRepeats as number | undefined,

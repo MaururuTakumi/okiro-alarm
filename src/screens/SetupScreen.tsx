@@ -76,6 +76,8 @@ export default function SetupScreen() {
         missionConfig,
         sound: 'default' as AlarmSound,
         preventSnooze: false,
+        payToSnooze: false,
+        snoozeCost: 100,
         repeatAlarm: false,
         repeatInterval: 3,
         maxRepeats: 3,

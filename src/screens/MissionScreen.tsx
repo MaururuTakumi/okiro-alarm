@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, Vibration } from 'react-native';
+import { View, Text, StyleSheet, Vibration, TouchableOpacity, Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useTheme } from '../contexts/ThemeContext';
@@ -15,8 +15,10 @@ export default function MissionScreen() {
   const c = theme.colors;
   const navigation = useNavigation();
   const route = useRoute<Route>();
-  const { missionType, missionConfig } = route.params;
+  const { missionType, missionConfig, preventSnooze, payToSnooze, snoozeCost } = route.params;
   const [completed, setCompleted] = useState(false);
+  const [snoozed, setSnoozed] = useState(false);
+  const [showPayConfirm, setShowPayConfirm] = useState(false);
 
   const handleComplete = useCallback(() => {
     setCompleted(true);
@@ -27,6 +29,45 @@ export default function MissionScreen() {
     }, 1500);
   }, [navigation, route.params.alarmId]);
 
+  const handleSnooze = useCallback(() => {
+    if (payToSnooze) {
+      setShowPayConfirm(true);
+    } else {
+      performSnooze();
+    }
+  }, [payToSnooze]);
+
+  const performSnooze = useCallback(() => {
+    setSnoozed(true);
+    cancelAlarmNotification(route.params.alarmId);
+    // TODO: Schedule a new notification 5 minutes from now
+    setTimeout(() => {
+      navigation.goBack();
+    }, 1500);
+  }, [navigation, route.params.alarmId]);
+
+  const handlePayAndSnooze = useCallback(() => {
+    // TODO: Process actual payment via IAP/Stripe
+    setShowPayConfirm(false);
+    performSnooze();
+  }, [performSnooze]);
+
+  const costAmount = snoozeCost ?? 100;
+
+  if (snoozed) {
+    return (
+      <View style={[styles.container, styles.center, { backgroundColor: c.background }]}>
+        <Text style={[styles.completedText, { color: c.primary }]}>{t('mission.snoozed')}</Text>
+        <Text style={[styles.stoppedText, { color: c.textSecondary }]}>{t('mission.snoozedSub')}</Text>
+        {payToSnooze && (
+          <Text style={[styles.paidText, { color: c.accent }]}>
+            {t('mission.paidSnooze', { amount: costAmount })}
+          </Text>
+        )}
+      </View>
+    );
+  }
+
   if (completed) {
     return (
       <View style={[styles.container, styles.center, { backgroundColor: c.background }]}>
@@ -35,6 +76,49 @@ export default function MissionScreen() {
       </View>
     );
   }
+
+  // Pay to Snooze confirmation overlay
+  if (showPayConfirm) {
+    return (
+      <View style={[styles.container, { backgroundColor: c.background }]}>
+        <Text style={[styles.headerText, { color: c.accent }]}>{t('mission.title')}</Text>
+
+        <View style={styles.payOverlay}>
+          <View style={[styles.payCard, { backgroundColor: c.surfaceElevated }]}>
+            <Text style={[styles.payTitle, { color: c.text }]}>{t('mission.paySnoozeTitle')}</Text>
+            <Text style={[styles.payCost, { color: c.primary }]}>
+              {t('alarmSet.snoozeCostValue', { amount: costAmount })}
+            </Text>
+            <Text style={[styles.payDesc, { color: c.textSecondary }]}>
+              {t('mission.paySnoozeDesc')}
+            </Text>
+
+            <TouchableOpacity
+              style={[styles.payButton, { backgroundColor: c.primary }]}
+              onPress={handlePayAndSnooze}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.payButtonText}>
+                {t('mission.payAndSnooze', { amount: costAmount })}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.cancelPayButton}
+              onPress={() => setShowPayConfirm(false)}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.cancelPayText, { color: c.textSecondary }]}>
+                {t('mission.doMissionInstead')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  const showSnoozeButton = !preventSnooze;
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
@@ -59,6 +143,44 @@ export default function MissionScreen() {
       {missionType === 'squats' && (
         <SquatsMission target={missionConfig.squatsTarget ?? 10} onComplete={handleComplete} />
       )}
+
+      {/* Snooze Button */}
+      {showSnoozeButton && (
+        <View style={styles.snoozeSection}>
+          <TouchableOpacity
+            style={[
+              styles.snoozeButton,
+              {
+                backgroundColor: payToSnooze ? 'transparent' : c.surfaceElevated,
+                borderColor: payToSnooze ? c.primary : c.border,
+                borderWidth: payToSnooze ? 2 : 1,
+              },
+            ]}
+            onPress={handleSnooze}
+            activeOpacity={0.7}
+          >
+            {payToSnooze ? (
+              <View style={styles.snoozeInner}>
+                <Text style={[styles.snoozeText, { color: c.primary }]}>
+                  {t('mission.snoozeFor', { amount: costAmount })}
+                </Text>
+                <Text style={[styles.snoozeSub, { color: c.textSecondary }]}>
+                  {t('mission.snooze5min')}
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.snoozeInner}>
+                <Text style={[styles.snoozeText, { color: c.textSecondary }]}>
+                  {t('mission.snooze')}
+                </Text>
+                <Text style={[styles.snoozeSub, { color: c.textMuted }]}>
+                  {t('mission.snooze5min')}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
@@ -69,4 +191,77 @@ const styles = StyleSheet.create({
   headerText: { fontSize: 18, fontWeight: '700', textAlign: 'center', marginBottom: 20, marginTop: 40 },
   completedText: { fontSize: 32, fontWeight: '700', marginBottom: 8 },
   stoppedText: { fontSize: 16 },
+  paidText: { fontSize: 14, marginTop: 12, fontWeight: '600' },
+
+  // Snooze
+  snoozeSection: {
+    paddingBottom: Platform.OS === 'web' ? 20 : 40,
+    paddingTop: 12,
+  },
+  snoozeButton: {
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  snoozeInner: {
+    alignItems: 'center',
+  },
+  snoozeText: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  snoozeSub: {
+    fontSize: 12,
+    marginTop: 2,
+  },
+
+  // Pay confirmation overlay
+  payOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  payCard: {
+    width: '100%',
+    borderRadius: 20,
+    padding: 28,
+    alignItems: 'center',
+  },
+  payTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  payCost: {
+    fontSize: 48,
+    fontWeight: '200',
+    marginBottom: 12,
+  },
+  payDesc: {
+    fontSize: 14,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 24,
+  },
+  payButton: {
+    width: '100%',
+    paddingVertical: 16,
+    borderRadius: 14,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  payButtonText: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  cancelPayButton: {
+    padding: 12,
+  },
+  cancelPayText: {
+    fontSize: 15,
+    fontWeight: '500',
+  },
 });

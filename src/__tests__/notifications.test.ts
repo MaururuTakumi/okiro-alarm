@@ -19,6 +19,8 @@ const makeAlarm = (overrides: Partial<Alarm> = {}): Alarm => ({
   missionConfig: { mathDifficulty: 1 },
   sound: 'default',
   preventSnooze: false,
+  payToSnooze: false,
+  snoozeCost: 100,
   repeatAlarm: false,
   repeatInterval: 3,
   maxRepeats: 3,
