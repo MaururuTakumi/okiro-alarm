@@ -1,18 +1,33 @@
+import Purchases, {
+  PurchasesPackage,
+  CustomerInfo,
+  PurchasesStoreProduct,
+} from 'react-native-purchases';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const PAYMENT_METHOD_KEY = '@payment_method';
 const SNOOZE_HISTORY_KEY = '@snooze_charges';
 
-// TODO: Replace with your actual backend URL
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://your-backend.com/api';
+// RevenueCat entitlement identifier for Pro subscription
+export const PRO_ENTITLEMENT_ID = 'pro';
 
-export interface PaymentMethod {
-  id: string;
-  last4: string;
-  brand: string;
-  expiryMonth: number;
-  expiryYear: number;
-}
+// RevenueCat product identifiers
+export const PRODUCT_IDS = {
+  MONTHLY: 'okiro_pro_monthly',
+  YEARLY: 'okiro_pro_yearly',
+};
+
+// Pay to Snooze consumable product IDs (100-yen increments)
+export const SNOOZE_PRODUCT_IDS: Record<number, string> = {
+  100: 'okiro_snooze_100',
+  300: 'okiro_snooze_300',
+  500: 'okiro_snooze_500',
+  1000: 'okiro_snooze_1000',
+  3000: 'okiro_snooze_3000',
+  5000: 'okiro_snooze_5000',
+  10000: 'okiro_snooze_10000',
+};
+
+export const SNOOZE_AMOUNTS = [100, 300, 500, 1000, 3000, 5000, 10000];
 
 export interface SnoozeCharge {
   id: string;
@@ -22,101 +37,74 @@ export interface SnoozeCharge {
 }
 
 class PaymentService {
-  private cachedPaymentMethod: PaymentMethod | null = null;
+  /**
+   * Purchase a Pro subscription package
+   */
+  async purchaseProPackage(pkg: PurchasesPackage): Promise<CustomerInfo> {
+    const { customerInfo } = await Purchases.purchasePackage(pkg);
+    return customerInfo;
+  }
 
   /**
-   * Get the saved payment method
+   * Purchase a consumable snooze product
    */
-  async getPaymentMethod(): Promise<PaymentMethod | null> {
-    if (this.cachedPaymentMethod) return this.cachedPaymentMethod;
-    try {
-      const data = await AsyncStorage.getItem(PAYMENT_METHOD_KEY);
-      if (data) {
-        this.cachedPaymentMethod = JSON.parse(data);
-        return this.cachedPaymentMethod;
-      }
-    } catch (e) {
-      console.warn('Failed to get payment method:', e);
+  async purchaseSnooze(amount: number, alarmId: string): Promise<boolean> {
+    const productId = SNOOZE_PRODUCT_IDS[amount];
+    if (!productId) {
+      console.warn('Invalid snooze amount:', amount);
+      return false;
     }
-    return null;
-  }
 
-  /**
-   * Save a payment method locally after Stripe setup
-   */
-  async savePaymentMethod(method: PaymentMethod): Promise<void> {
-    this.cachedPaymentMethod = method;
-    await AsyncStorage.setItem(PAYMENT_METHOD_KEY, JSON.stringify(method));
-  }
-
-  /**
-   * Remove the saved payment method
-   */
-  async removePaymentMethod(): Promise<void> {
-    this.cachedPaymentMethod = null;
-    await AsyncStorage.removeItem(PAYMENT_METHOD_KEY);
-  }
-
-  /**
-   * Check if a payment method is set up
-   */
-  async hasPaymentMethod(): Promise<boolean> {
-    const method = await this.getPaymentMethod();
-    return method !== null;
-  }
-
-  /**
-   * Create a SetupIntent on the backend for saving a card
-   * Returns clientSecret for Stripe SDK
-   */
-  async createSetupIntent(): Promise<{ clientSecret: string; customerId: string }> {
-    // TODO: Replace with actual API call to your backend
-    // Backend should:
-    // 1. Create/get Stripe Customer
-    // 2. Create SetupIntent with that customer
-    // 3. Return clientSecret
-    const response = await fetch(`${API_BASE_URL}/create-setup-intent`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    if (!response.ok) throw new Error('Failed to create setup intent');
-    return response.json();
-  }
-
-  /**
-   * Charge the user for a snooze
-   * Returns true if charge was successful
-   */
-  async chargeSnooze(amount: number, alarmId: string): Promise<boolean> {
     try {
-      // TODO: Replace with actual API call
-      // Backend should:
-      // 1. Create PaymentIntent with saved PaymentMethod
-      // 2. Confirm payment off_session
-      // 3. Return success/failure
-      const response = await fetch(`${API_BASE_URL}/charge-snooze`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount, alarmId }),
-      });
-
-      if (!response.ok) {
-        console.warn('Snooze charge failed:', response.status);
+      const products = await Purchases.getProducts([productId]);
+      if (products.length === 0) {
+        console.warn('Snooze product not found:', productId);
+        if (__DEV__) {
+          await this.recordCharge({ amount, alarmId });
+          return true;
+        }
         return false;
       }
 
-      // Record the charge locally
+      await Purchases.purchaseStoreProduct(products[0]);
       await this.recordCharge({ amount, alarmId });
       return true;
-    } catch (e) {
-      console.warn('Snooze charge error:', e);
-      // In development, simulate success
+    } catch (e: any) {
+      if (e.userCancelled) return false;
+      console.warn('Snooze purchase error:', e);
       if (__DEV__) {
         await this.recordCharge({ amount, alarmId });
         return true;
       }
       return false;
     }
+  }
+
+  /**
+   * Get available snooze products with prices
+   */
+  async getSnoozeProducts(): Promise<PurchasesStoreProduct[]> {
+    const ids = Object.values(SNOOZE_PRODUCT_IDS);
+    return Purchases.getProducts(ids);
+  }
+
+  /**
+   * Check if user has active Pro entitlement
+   */
+  async checkProStatus(): Promise<boolean> {
+    try {
+      const customerInfo = await Purchases.getCustomerInfo();
+      return customerInfo.entitlements.active[PRO_ENTITLEMENT_ID] !== undefined;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Restore previous purchases
+   */
+  async restorePurchases(): Promise<CustomerInfo> {
+    return Purchases.restorePurchases();
   }
 
   /**
@@ -132,7 +120,6 @@ class PaymentService {
         timestamp: Date.now(),
         alarmId,
       });
-      // Keep last 100 charges
       const trimmed = history.slice(-100);
       await AsyncStorage.setItem(SNOOZE_HISTORY_KEY, JSON.stringify(trimmed));
     } catch (e) {

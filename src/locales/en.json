@@ -203,14 +203,9 @@
     "notifications": "Notifications",
     "helpFeedback": "Help & Feedback",
     "rateApp": "Rate Okiro",
-    "payment": "Pay to Snooze Payment",
-    "paymentMethod": "Payment Method",
-    "addCard": "Add Card",
+    "payment": "Pay to Snooze",
     "totalSnoozeCharged": "Total Snooze Charges",
-    "paymentSaved": "Card Saved",
-    "paymentSavedDesc": "This card will be used for Pay to Snooze charges",
-    "removePayment": "Remove Card",
-    "removePaymentDesc": "Remove the registered payment method?"
+    "privacyPolicy": "Privacy Policy"
   },
   "freemium": {
     "free": "Free",
@@ -245,6 +240,20 @@
     "disclaimerMonthly": "$4.99/month. Cancel anytime.",
     "socialProof": "Experience the mornings\n50 million users enjoy",
     "ranked": "#1 Alarm app in 97 countries"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: March 2026",
+    "section1Title": "Data Collection",
+    "section1Body": "Okiro stores alarm settings and preferences locally on your device only. We do not collect, transmit, or store any personal data on external servers.",
+    "section2Title": "In-App Purchases",
+    "section2Body": "Subscription and consumable purchases are processed entirely through Apple's App Store. Payment information is managed by Apple and is never accessed or stored by Okiro.",
+    "section3Title": "Camera & Sensors",
+    "section3Body": "Okiro uses the camera for barcode scan and photo match missions, and motion sensors for shake and squats missions. Camera and sensor data is processed locally and is never transmitted externally.",
+    "section4Title": "Notifications",
+    "section4Body": "Okiro uses local notifications to ring your alarm at the scheduled time. No push notification service or external server is involved.",
+    "section5Title": "Contact",
+    "section5Body": "If you have questions about this privacy policy, please contact us at support@okiro.app."
   },
   "errors": {
     "cameraPermission": "Camera permission is required",

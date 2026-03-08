@@ -22,6 +22,22 @@ jest.mock('expo-notifications', () => ({
   },
 }));
 
+// Mock react-native-purchases (RevenueCat)
+jest.mock('react-native-purchases', () => ({
+  __esModule: true,
+  default: {
+    configure: jest.fn(),
+    setLogLevel: jest.fn(),
+    getOfferings: jest.fn(() => Promise.resolve({ current: { availablePackages: [] } })),
+    getCustomerInfo: jest.fn(() => Promise.resolve({ entitlements: { active: {} } })),
+    purchasePackage: jest.fn(() => Promise.resolve({ customerInfo: { entitlements: { active: {} } } })),
+    purchaseStoreProduct: jest.fn(() => Promise.resolve({ customerInfo: { entitlements: { active: {} } } })),
+    restorePurchases: jest.fn(() => Promise.resolve({ entitlements: { active: {} } })),
+    getProducts: jest.fn(() => Promise.resolve([])),
+  },
+  LOG_LEVEL: { DEBUG: 'DEBUG' },
+}));
+
 // Mock expo-sensors
 jest.mock('expo-sensors', () => ({
   Accelerometer: {

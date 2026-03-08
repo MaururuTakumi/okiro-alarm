@@ -52,7 +52,7 @@ export default function MissionScreen() {
 
   const handlePayAndSnooze = useCallback(async () => {
     setCharging(true);
-    const success = await paymentService.chargeSnooze(
+    const success = await paymentService.purchaseSnooze(
       costAmount,
       route.params.alarmId,
     );

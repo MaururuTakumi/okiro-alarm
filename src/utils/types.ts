@@ -38,6 +38,7 @@ export type RootStackParamList = {
   MainTabs: undefined;
   AlarmSet: { alarmId?: string };
   Pro: undefined;
+  PrivacyPolicy: undefined;
   Mission: {
     alarmId: string;
     missionType: MissionType;

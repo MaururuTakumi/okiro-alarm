@@ -8,14 +8,11 @@ import { useTranslation } from 'react-i18next';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { StripeProvider } from '@stripe/stripe-react-native';
 import './src/locales/i18n';
 import { AlarmProvider } from './src/contexts/AlarmContext';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import { FreemiumProvider } from './src/contexts/FreemiumContext';
 
-// TODO: Replace with your Stripe publishable key
-const STRIPE_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_STRIPE_KEY || 'pk_test_placeholder';
 import HomeScreen from './src/screens/HomeScreen';
 import AlarmSetScreen from './src/screens/AlarmSetScreen';
 import MissionScreen from './src/screens/MissionScreen';
@@ -23,6 +20,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import SetupScreen from './src/screens/SetupScreen';
 import ProScreen from './src/screens/ProScreen';
+import PrivacyPolicyScreen from './src/screens/PrivacyPolicyScreen';
 import { RootStackParamList, MainTabParamList, MissionType, MissionConfig } from './src/utils/types';
 import { requestPermissions } from './src/utils/notifications';
 
@@ -152,6 +150,13 @@ function AppNavigator() {
             presentation: 'modal',
           }}
         />
+        <Stack.Screen
+          name="PrivacyPolicy"
+          component={PrivacyPolicyScreen}
+          options={{
+            title: t('settings.privacyPolicy'),
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -183,14 +188,12 @@ export default function App() {
   }, []);
 
   return (
-    <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
-      <ThemeProvider>
-        <FreemiumProvider>
-          <AlarmProvider>
-            <AppNavigator />
-          </AlarmProvider>
-        </FreemiumProvider>
-      </ThemeProvider>
-    </StripeProvider>
+    <ThemeProvider>
+      <FreemiumProvider>
+        <AlarmProvider>
+          <AppNavigator />
+        </AlarmProvider>
+      </FreemiumProvider>
+    </ThemeProvider>
   );
 }

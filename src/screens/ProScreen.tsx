@@ -6,6 +6,8 @@ import {
   ScrollView,
   StyleSheet,
   Platform,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +15,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '../contexts/ThemeContext';
 import { useFreemium } from '../contexts/FreemiumContext';
 import { RootStackParamList } from '../utils/types';
+import { PRODUCT_IDS } from '../services/PaymentService';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 type PlanType = 'yearly' | 'monthly';
@@ -22,12 +25,40 @@ export default function ProScreen() {
   const { theme } = useTheme();
   const c = theme.colors;
   const navigation = useNavigation<Nav>();
-  const { upgradeToPro, isPro } = useFreemium();
+  const { upgradeToPro, restorePurchase, isPro, offerings } = useFreemium();
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('yearly');
+  const [purchasing, setPurchasing] = useState(false);
 
   const handlePurchase = async () => {
-    await upgradeToPro();
-    navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
+    const targetId = selectedPlan === 'yearly' ? PRODUCT_IDS.YEARLY : PRODUCT_IDS.MONTHLY;
+    const pkg = offerings.find((p) => p.product.identifier === targetId) ?? offerings[0];
+    if (!pkg) {
+      Alert.alert('Error', 'No packages available. Please try again later.');
+      return;
+    }
+    setPurchasing(true);
+    try {
+      await upgradeToPro(pkg);
+      navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
+    } catch (e: any) {
+      if (!e.userCancelled) {
+        Alert.alert('Error', e.message || 'Purchase failed. Please try again.');
+      }
+    } finally {
+      setPurchasing(false);
+    }
+  };
+
+  const handleRestore = async () => {
+    setPurchasing(true);
+    try {
+      await restorePurchase();
+      Alert.alert(t('common.ok'), t('freemium.restorePurchase'));
+    } catch {
+      Alert.alert('Error', 'Restore failed. Please try again.');
+    } finally {
+      setPurchasing(false);
+    }
   };
 
   const handleClose = () => {
@@ -168,17 +199,27 @@ export default function ProScreen() {
       {/* Bottom CTA */}
       <View style={[styles.bottomSection, { backgroundColor: c.background }]}>
         <TouchableOpacity
-          style={[styles.purchaseButton, { backgroundColor: c.primary }]}
+          style={[styles.purchaseButton, { backgroundColor: c.primary, opacity: purchasing ? 0.7 : 1 }]}
           onPress={handlePurchase}
           activeOpacity={0.8}
+          disabled={purchasing}
         >
-          <Text style={styles.purchaseButtonText}>
-            {selectedPlan === 'yearly' ? t('pro.startTrial') : t('pro.subscribe')}
-          </Text>
+          {purchasing ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text style={styles.purchaseButtonText}>
+              {selectedPlan === 'yearly' ? t('pro.startTrial') : t('pro.subscribe')}
+            </Text>
+          )}
         </TouchableOpacity>
         <Text style={[styles.disclaimer, { color: c.textMuted }]}>
           {selectedPlan === 'yearly' ? t('pro.disclaimerYearly') : t('pro.disclaimerMonthly')}
         </Text>
+        <TouchableOpacity onPress={handleRestore} disabled={purchasing} style={styles.restoreButton}>
+          <Text style={[styles.restoreText, { color: c.textSecondary }]}>
+            {t('freemium.restorePurchase')}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -416,5 +457,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     lineHeight: 16,
+  },
+  restoreButton: {
+    marginTop: 8,
+    padding: 8,
+    alignItems: 'center',
+  },
+  restoreText: {
+    fontSize: 13,
+    fontWeight: '500',
   },
 });

@@ -2,7 +2,6 @@
   "expo": {
     "name": "Okiro",
     "slug": "okiro",
-    "displayName": "Okiro",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +13,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.taku2914.okiro"
+      "bundleIdentifier": "com.taku2914.okiro",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSUserNotificationsUsageDescription": "Okiro needs notifications to ring your alarm at the scheduled time.",
+        "NSCameraUsageDescription": "Okiro uses the camera for barcode scan and photo match missions.",
+        "NSMotionUsageDescription": "Okiro uses motion sensors for shake and squats missions.",
+        "UIBackgroundModes": ["audio", "fetch", "remote-notification"]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -30,8 +36,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "@react-native-community/datetimepicker",
-      "@stripe/stripe-react-native"
+      "@react-native-community/datetimepicker"
     ]
   }
 }

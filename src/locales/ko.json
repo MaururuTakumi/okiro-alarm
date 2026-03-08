@@ -203,14 +203,9 @@
     "notifications": "알림",
     "helpFeedback": "도움말 및 피드백",
     "rateApp": "Okiro 평가하기",
-    "payment": "Pay to Snooze 결제",
-    "paymentMethod": "결제 수단",
-    "addCard": "카드 추가",
+    "payment": "Pay to Snooze",
     "totalSnoozeCharged": "스누즈 결제 합계",
-    "paymentSaved": "카드가 저장되었습니다",
-    "paymentSavedDesc": "Pay to Snooze 결제에 사용됩니다",
-    "removePayment": "카드 삭제",
-    "removePaymentDesc": "등록된 결제 수단을 삭제하시겠습니까?"
+    "privacyPolicy": "개인정보 처리방침"
   },
   "freemium": {
     "free": "무료",
@@ -245,6 +240,20 @@
     "disclaimerMonthly": "₩6,500/월. 언제든 취소 가능.",
     "socialProof": "5천만 사용자가\n경험하는 아침을 당신도",
     "ranked": "97개국 1위 알람 앱"
+  },
+  "privacy": {
+    "title": "개인정보 처리방침",
+    "lastUpdated": "최종 업데이트: 2026년 3월",
+    "section1Title": "데이터 수집",
+    "section1Body": "Okiro는 알람 설정과 환경 설정을 기기에만 로컬 저장합니다. 개인 데이터를 외부 서버에 수집, 전송 또는 저장하지 않습니다.",
+    "section2Title": "인앱 구매",
+    "section2Body": "구독 및 소모성 구매는 전적으로 Apple App Store를 통해 처리됩니다. 결제 정보는 Apple이 관리하며 Okiro가 접근하거나 저장하지 않습니다.",
+    "section3Title": "카메라 및 센서",
+    "section3Body": "Okiro는 바코드 스캔 및 사진 촬영 미션에 카메라를, 흔들기 및 스쿼트 미션에 모션 센서를 사용합니다. 카메라 및 센서 데이터는 로컬에서 처리되며 외부로 전송되지 않습니다.",
+    "section4Title": "알림",
+    "section4Body": "Okiro는 설정된 시간에 알람을 울리기 위해 로컬 알림을 사용합니다. 푸시 알림 서비스나 외부 서버는 관여하지 않습니다.",
+    "section5Title": "문의",
+    "section5Body": "이 개인정보 처리방침에 대한 질문이 있으시면 support@okiro.app으로 연락해 주세요."
   },
   "errors": {
     "cameraPermission": "카메라 권한이 필요합니다",

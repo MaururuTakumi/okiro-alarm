@@ -203,14 +203,9 @@
     "notifications": "通知",
     "helpFeedback": "帮助与反馈",
     "rateApp": "给Okiro评分",
-    "payment": "Pay to Snooze 支付",
-    "paymentMethod": "支付方式",
-    "addCard": "添加银行卡",
+    "payment": "Pay to Snooze",
     "totalSnoozeCharged": "贪睡总扣费",
-    "paymentSaved": "银行卡已保存",
-    "paymentSavedDesc": "此卡将用于Pay to Snooze扣费",
-    "removePayment": "删除银行卡",
-    "removePaymentDesc": "是否删除已注册的支付方式？"
+    "privacyPolicy": "隐私政策"
   },
   "freemium": {
     "free": "免费",
@@ -245,6 +240,20 @@
     "disclaimerMonthly": "¥28/月。随时取消。",
     "socialProof": "体验5000万用户\n所享受的早晨",
     "ranked": "97个国家排名第一的闹钟应用"
+  },
+  "privacy": {
+    "title": "隐私政策",
+    "lastUpdated": "最后更新：2026年3月",
+    "section1Title": "数据收集",
+    "section1Body": "Okiro仅在您的设备上本地存储闹钟设置和偏好。我们不会收集、传输或存储任何个人数据到外部服务器。",
+    "section2Title": "应用内购买",
+    "section2Body": "订阅和消耗型购买完全通过Apple App Store处理。付款信息由Apple管理，Okiro不会访问或存储。",
+    "section3Title": "相机和传感器",
+    "section3Body": "Okiro使用相机进行条码扫描和照片匹配任务，使用运动传感器进行摇晃和深蹲任务。相机和传感器数据在本地处理，不会传输到外部。",
+    "section4Title": "通知",
+    "section4Body": "Okiro使用本地通知在设定时间响铃。不涉及推送通知服务或外部服务器。",
+    "section5Title": "联系我们",
+    "section5Body": "如果您对本隐私政策有任何疑问，请通过 support@okiro.app 联系我们。"
   },
   "errors": {
     "cameraPermission": "需要相机权限",
