@@ -83,7 +83,9 @@ export default function HomeScreen() {
 
   const handleDelete = (id: string) => {
     if (Platform.OS === 'web') {
-      deleteAlarm(id);
+      if (window.confirm(t('common.delete') + '?')) {
+        deleteAlarm(id);
+      }
       return;
     }
     Alert.alert(t('common.delete'), '', [
@@ -99,6 +101,7 @@ export default function HomeScreen() {
         style={[styles.alarmCard, { backgroundColor: c.cardBackground }]}
         onPress={() => navigation.navigate('AlarmSet', { alarmId: item.id })}
         onLongPress={() => handleDelete(item.id)}
+        delayLongPress={500}
         activeOpacity={0.7}
       >
         <View style={styles.alarmLeft}>
